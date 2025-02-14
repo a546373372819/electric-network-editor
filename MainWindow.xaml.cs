@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ElectricNetworkEditor
+namespace electric_network_editor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -21,42 +21,58 @@ namespace ElectricNetworkEditor
     public partial class MainWindow : Window
     {
 
-        private string _selectedSymbolImgPath;
+        private RadioButton _selectedSymbolBtn;
         public MainWindow()
         {
             InitializeComponent();
         }
 
 
-
         private void SymbolButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is string symbolPath)
+            if (sender is RadioButton button)
             {
-                _selectedSymbolImgPath = symbolPath; // Save selected symbol path
+                _selectedSymbolBtn = button;
             }
         }
 
+        private void NodeConnectButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!string.IsNullOrEmpty(_selectedSymbolImgPath))
+            if (_selectedSymbolBtn != null)
             {
                 Point clickPosition = e.GetPosition(NetworkCanvas);
 
-                Image symbolImage = new Image
-                {
-                    Source = new BitmapImage(new System.Uri(_selectedSymbolImgPath, System.UriKind.Relative)),
-                    Width = 50,  // Adjust as needed
-                    Height = 50  // Adjust as needed
-                };
+                PlaceSymbol(clickPosition);
 
-                // Position the image on the canvas
-                Canvas.SetLeft(symbolImage, clickPosition.X - 25); // Center it
-                Canvas.SetTop(symbolImage, clickPosition.Y - 25);
-
-                // Add the image to the canvas
-                SymbolCanvas.Children.Add(symbolImage);
             }
+        }
+
+        private void PlaceSymbol(Point position)
+        {
+
+            Console.WriteLine("aa");
+            string ImgPath = _selectedSymbolBtn.Tag.ToString();
+
+            Image symbolImage = new Image
+            {
+                Source = new BitmapImage(new System.Uri(ImgPath, System.UriKind.Relative)),
+                Width = 100,
+                Height = 100
+            };
+
+            Canvas.SetLeft(symbolImage, position.X - 50);
+            Canvas.SetTop(symbolImage, position.Y - 50);
+
+            NetworkCanvas.Children.Add(symbolImage);
+            _selectedSymbolBtn.IsChecked = false;
+            _selectedSymbolBtn = null;
         }
     }
 }
