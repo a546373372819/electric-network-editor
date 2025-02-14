@@ -17,6 +17,7 @@
         <StackPanel Width="50px"
                     Orientation="Vertical"
                     Background="LightGray"
+                    x:Name="Sidebar"
                     >
             <StackPanel.Resources>
                 <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
@@ -28,35 +29,45 @@
 
 
 
-            <RadioButton  
-                    Name="NetworkSrcBtn" 
+            <!--<RadioButton  
+                    Name="NetworkNodeBtn" 
                     BorderBrush="Black" 
                     BorderThickness="1"
                     Click="SymbolButton_Click"
-                    Tag="Images/circle.png"
                     >
                 <Image Source="Images/circle.png"></Image>
             </RadioButton>
 
             <RadioButton 
-                    Name="NetworkNodeBtn" 
+                    Name="NetworkSwitchBtn" 
                     BorderBrush="Black" 
                     BorderThickness="1" 
                     Click="SymbolButton_Click"
-                    Tag="Images/rectangle.png"
                     >
                 <Image Source="Images/rectangle.png"></Image>
             </RadioButton>
 
             <RadioButton  
-                    Name="NetworkSwitchBtn" 
+                    Name="NetworkSrcBtn" 
                     BorderBrush="Black" 
                     BorderThickness="1"
                     Click="SymbolButton_Click"
                     Tag="Images/triangle.png"
                     >
                 <Image Source="Images/triangle.png"></Image>
+            </RadioButton>-->
+
+            <RadioButton  
+                    Name="NetworkConnectBtn" 
+                    BorderBrush="Black" 
+                    BorderThickness="1"
+                    Unchecked="ConnectionBtn_Unchecked"
+                
+                    >
+                <Image Source="Images/connect.png"></Image>
             </RadioButton>
+
+
 
         </StackPanel>
 
