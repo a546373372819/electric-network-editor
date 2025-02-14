@@ -103,8 +103,26 @@ namespace electric_network_editor
             double x2= _UIElementToSymbolMap[child].position.X + 50;
             double y2= _UIElementToSymbolMap[child].position.Y + 50;
 
-            if(Math.Abs(x2-x1)>50 & Math.Abs(y2 - y1)>50)
+            if(Math.Abs(x2 - x1)>50 & Math.Abs(y2 - y1)>50)
             {
+                if (x2>x1)
+                {
+                    x2 -= 55;
+                }
+                else
+                {
+                    x2 += 55;
+                }
+
+                if (y2 > y1)
+                {
+                    y1 += 55;
+                }
+                else
+                {
+                    y1 -= 55;
+                }
+
                 Line connectionLineVert = new()
                 {
                     X1 = x1,
@@ -134,6 +152,37 @@ namespace electric_network_editor
 
                 return;
             }
+
+            if (Math.Abs(x2 - x1) > 50)
+            {
+                if (x2 > x1)
+                {
+                    x2 -= 55;
+                    x1 += 55;
+                }
+                else
+                {
+                    x2 += 55;
+                    x1 -= 55;
+                }
+                y2 = y1;
+
+            }
+            else
+            {
+                if (y2 > y1)
+                {
+                    y2 -= 55;
+                    y1 += 55;
+                }
+                else
+                {
+                    y2 += 55;
+                    y1 -= 55;
+                }
+                x2 = x1;
+            }
+
 
             Line connectionLine = new()
             {
