@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
-using System.Windows.Controls;
 
 
-namespace electric_network_editor.Helpers
+namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
