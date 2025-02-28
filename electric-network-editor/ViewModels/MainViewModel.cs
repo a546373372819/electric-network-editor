@@ -1,14 +1,18 @@
 ﻿using electric_network_editor.Model;
+using PluginContracts;
+using Prism.Modularity;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace electric_network_editor.ViewModel
+namespace electric_network_editor.ViewModels
 {
-    internal class MainViewModel
+    public class MainViewModel:BindableBase
     {
         public Dictionary<SymbolType, string> SymbolImagePaths { get; } = new()
         {
@@ -19,7 +23,7 @@ namespace electric_network_editor.ViewModel
 
         private readonly List<Symbol> _drawnSymbols = new();
         private readonly Dictionary<UIElement, Symbol> _uiElementToSymbolMap = new();
-
+        
         public void RegisterSymbol(UIElement element, Symbol symbol)
         {
             _drawnSymbols.Add(symbol);

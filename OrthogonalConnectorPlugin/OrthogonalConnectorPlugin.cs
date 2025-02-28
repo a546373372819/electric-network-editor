@@ -1,5 +1,8 @@
 using OrthogonalConnectorPlugin.Helpers;
 using PluginContracts;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Navigation.Regions;
 using System;
 using System.Composition;
 using System.Windows;
@@ -11,17 +14,15 @@ using Point = System.Windows.Point;
 namespace OrthogonalConnectorPlugin
 {
     [Export(typeof(PluginContracts.ISidebarCommand))]
-    public class OrthogonalConnectorPlugin : ISidebarCommand
+    public class OrthogonalConnectorPlugin : ISidebarCommand,IModule
     {
-        string imgPath = "Images/connect.png";
+        string imgPath = "C:\\Users\\Kita\\Documents\\GitHub\\electric-network-editor\\electric-network-editor\\Images\\connect.png";
         private Canvas _canvas;
         private UIElement _selectedSymbol=null;
 
 
-        [ImportingConstructor]
-        public OrthogonalConnectorPlugin(Canvas canvas)
-        {
-            _canvas = canvas;
+        public OrthogonalConnectorPlugin() { 
+
         }
 
         public void Clicked(object sender, RoutedEventArgs e)
@@ -59,26 +60,7 @@ namespace OrthogonalConnectorPlugin
                 MessageBox.Show("Clicked on empty canvas.");
             }
 
-            /*if (_selectedSymbol != null)
-            {
-                Point parent = _viewModel.GetSymbol(_selectedSymbol).position;
-                Point child = _viewModel.GetSymbol((UIElement)sender).position;
-
-                parent.X += 50;
-                parent.Y += 50;
-                child.X += 50;
-                child.Y += 50;
-
-
-                LineHelper.ConnectPoints(NetworkCanvas, parent, child);
-                UIHelper.RemoveHighlight(_selectedSymbol);
-                _selectedSymbol = null;
-            }
-            else
-            {
-                _selectedSymbol = (UIElement)sender;
-                UIHelper.ApplyHighlight(_selectedSymbol);
-            }*/
+           
 
 
         }
@@ -96,12 +78,22 @@ namespace OrthogonalConnectorPlugin
             rb.Unchecked += ConnectionBtn_Unchecked;
             var img = new Image
             {
-                Source = new BitmapImage(new Uri(imgPath, UriKind.Relative)),
+                Source = new BitmapImage(new Uri(imgPath, UriKind.Absolute)),
                 Width = 30,
                 Height = 30
             };
             rb.Content = img;
             return rb;
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            
+        }
+
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
+            
         }
     }
 }

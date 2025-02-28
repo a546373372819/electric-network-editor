@@ -45,7 +45,7 @@
         </StackPanel>
 
         <!-- Canvas for placing symbols -->
-        <Canvas x:Name="NetworkCanvas" Grid.Column="1" Background="White" MouseDown="Canvas_MouseDown"/>
+        <Canvas x:Name="NetworkCanvas" Grid.Column="1" Background="White"/>
 
     </Grid>
 </Window>

@@ -8,13 +8,13 @@ using System.Windows.Media.TextFormatting;
 
 namespace electric_network_editor.Model
 {
-    enum SymbolType
+    public enum SymbolType
     {
         Source,
         Switch,
         Node
     }
-    internal class Symbol
+    public class Symbol
     {
         int id;
         SymbolType type;
