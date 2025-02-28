@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginContracts;
+using System;
 using System.Collections.Generic;
 using System.Composition.Hosting.Core;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace electric_network_editor
 {
     internal class CanvasExportProvider : ExportDescriptorProvider
     {
-        private readonly Canvas _canvas;
+        private readonly CanvasWrapper _canvas;
 
-        public CanvasExportProvider(Canvas canvas)
+        public CanvasExportProvider(CanvasWrapper canvas)
         {
             _canvas = canvas;
         }
@@ -20,7 +21,7 @@ namespace electric_network_editor
         public override IEnumerable<ExportDescriptorPromise> GetExportDescriptors(
             CompositionContract contract, DependencyAccessor descriptorAccessor)
         {
-            if (contract.ContractType == typeof(Canvas))
+            if (contract.ContractType == typeof(CanvasWrapper))
             {
                 yield return new ExportDescriptorPromise(
                     contract,

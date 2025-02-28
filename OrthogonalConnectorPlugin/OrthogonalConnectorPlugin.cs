@@ -14,33 +14,33 @@ namespace OrthogonalConnectorPlugin
     public class OrthogonalConnectorPlugin : ISidebarCommand
     {
         string imgPath = "Images/connect.png";
-        private Canvas _canvas;
+        private CanvasWrapper _canvas;
         private UIElement _selectedSymbol=null;
 
 
         [ImportingConstructor]
-        public OrthogonalConnectorPlugin(Canvas canvas)
+        public OrthogonalConnectorPlugin(CanvasWrapper canvas)
         {
             _canvas = canvas;
         }
 
         public void Clicked(object sender, RoutedEventArgs e)
         {
-            _canvas.MouseDown += CanvasClicked;
+            _canvas.SetMouseDown(CanvasClicked);
         }
 
         private void CanvasClicked(object sender, MouseButtonEventArgs e)
         {
-            Point clickPosition = e.GetPosition(_canvas);
+            Point clickPosition = _canvas.GetClickPosition(e);
 
             UIElement clickedElement = _canvas.InputHitTest(clickPosition) as UIElement;
 
-            if (clickedElement != null && clickedElement != _canvas)
+            if (clickedElement != null && !(clickedElement is Canvas))
             {
-                if(_selectedSymbol != null)
+                if (_selectedSymbol != null)
                 {
-                    Point parent = _selectedSymbol.TranslatePoint(new Point(0,0),_canvas);
-                    Point child = clickedElement.TranslatePoint(new Point(0, 0), _canvas);
+                    Point parent = _canvas.TranslatePoint(_selectedSymbol);
+                    Point child = _canvas.TranslatePoint(clickedElement);
 
                     parent.X += 50;
                     parent.Y += 50;
@@ -52,41 +52,18 @@ namespace OrthogonalConnectorPlugin
                     _selectedSymbol = null;
                 }
                 else _selectedSymbol = clickedElement;
-                MessageBox.Show($"Clicked on: {clickedElement.GetType().Name}");
-            }
-            else
-            {
-                MessageBox.Show("Clicked on empty canvas.");
             }
 
-            /*if (_selectedSymbol != null)
-            {
-                Point parent = _viewModel.GetSymbol(_selectedSymbol).position;
-                Point child = _viewModel.GetSymbol((UIElement)sender).position;
 
-                parent.X += 50;
-                parent.Y += 50;
-                child.X += 50;
-                child.Y += 50;
-
-
-                LineHelper.ConnectPoints(NetworkCanvas, parent, child);
-                UIHelper.RemoveHighlight(_selectedSymbol);
-                _selectedSymbol = null;
-            }
-            else
-            {
-                _selectedSymbol = (UIElement)sender;
-                UIHelper.ApplyHighlight(_selectedSymbol);
-            }*/
-
+            
+          
 
         }
 
         private void ConnectionBtn_Unchecked(object sender, RoutedEventArgs e)
         {
             _selectedSymbol = null;
-            _canvas.MouseDown -= CanvasClicked;
+            _canvas.RemoveMouseDown(CanvasClicked);
         }
 
         public RadioButton GetButton()

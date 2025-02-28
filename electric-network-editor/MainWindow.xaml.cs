@@ -105,7 +105,7 @@ namespace electric_network_editor
 
                 var configuration = new ContainerConfiguration()
                     .WithAssemblies(pluginAssemblies)
-                    .WithProvider(new CanvasExportProvider(NetworkCanvas));
+                    .WithProvider(new CanvasExportProvider(new CanvasWrapper(NetworkCanvas)));
 
                 using (var container = configuration.CreateContainer())
                 {

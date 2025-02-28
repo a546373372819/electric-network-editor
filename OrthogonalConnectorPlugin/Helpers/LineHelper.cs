@@ -7,13 +7,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
-
+using PluginContracts;
 
 namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static void ConnectPoints(Canvas NetworkCanvas, Point parent, Point child)
+        public static void ConnectPoints(CanvasWrapper NetworkCanvas, Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -35,7 +35,7 @@ namespace OrthogonalConnectorPlugin.Helpers
 
         }
 
-        private static void DrawSingleLine(Canvas NetworkCanvas, Point parent, Point child)
+        private static void DrawSingleLine(CanvasWrapper NetworkCanvas, Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -88,10 +88,10 @@ namespace OrthogonalConnectorPlugin.Helpers
                 StrokeThickness = 5
             };
 
-            NetworkCanvas.Children.Add(connectionLine);
+            NetworkCanvas.AddChild(connectionLine);
         }
 
-        private static void DrawTwoLines(Canvas NetworkCanvas, Point parent, Point child)
+        private static void DrawTwoLines(CanvasWrapper NetworkCanvas, Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -142,8 +142,8 @@ namespace OrthogonalConnectorPlugin.Helpers
                 StrokeThickness = 5
             };
 
-            NetworkCanvas.Children.Add(connectionLineHor);
-            NetworkCanvas.Children.Add(connectionLineVert);
+            NetworkCanvas.AddChild(connectionLineHor);
+            NetworkCanvas.AddChild(connectionLineVert);
 
 
         }
