@@ -11,9 +11,9 @@ namespace PluginContracts
 {
     public interface ISidebarCommand
     {
-        void Clicked(object sender, RoutedEventArgs e);
-
-        RadioButton GetButton();
+/*        void Clicked(object sender, RoutedEventArgs e);
+*/        INetworkCanvasStrategy DrawingStrategy { get; }
+        RadioButton Button { get; }
 
     }
 }

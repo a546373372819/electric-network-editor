@@ -27,7 +27,7 @@ namespace electric_network_editor
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NetworkEditorView : Window
     {
         private readonly MainViewModel _viewModel = new();
         private RadioButton _selectedSymbolBtn;
@@ -38,11 +38,11 @@ namespace electric_network_editor
 
 
 
-        public MainWindow()
+        public NetworkEditorView()
         {
             InitializeComponent();
-            LoadPlugins();
-            CreateSymbolButtons();
+/*            LoadPlugins();
+            CreateSymbolButtons();*/
         }
 
         private void SymbolButton_Click(object sender, RoutedEventArgs e)
@@ -52,46 +52,46 @@ namespace electric_network_editor
         }
 
 
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (_selectedSymbolBtn != null)
-                DrawSymbol(e.GetPosition(NetworkCanvas));
-        }
+        /*        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+                {
+                    if (_selectedSymbolBtn != null)
+                        DrawSymbol(e.GetPosition(NetworkCanvas));
+                }*/
 
-        
 
-        private void CreateSymbolButtons()
-        {
-            foreach (var (type, imgSrc) in _viewModel.SymbolImagePaths)
-            {
-                RadioButton rb = new() { Tag = type };
-                rb.Click += SymbolButton_Click;
-                rb.Content = UIHelper.CreateSymbolImage(type, imgSrc,30);
-                Sidebar.Children.Add(rb);
-            }
 
-            Sidebar.Children.Add(_sidebarCommands.First().GetButton());
-        }
+        /*        private void CreateSymbolButtons()
+                {
+                    foreach (var (type, imgSrc) in _viewModel.SymbolImagePaths)
+                    {
+                        RadioButton rb = new() { Tag = type };
+                        rb.Click += SymbolButton_Click;
+                        rb.Content = UIHelper.CreateSymbolImage(type, imgSrc,30);
+                        Sidebar.Children.Add(rb);
+                    }
 
-        private void DrawSymbol(Point position)
-        {
-            SymbolType drawnSymbolType = (SymbolType)_selectedSymbolBtn.Tag;
-            Image symbolImage = UIHelper.CreateSymbolImage(drawnSymbolType, _viewModel.SymbolImagePaths[drawnSymbolType], 100);
-            //symbolImage.MouseDown += SymbolIcon_MouseDown;
+                    Sidebar.Children.Add(_sidebarCommands.First().GetButton());
+                }*/
 
-            position.Offset(-50, -50);
-            Canvas.SetLeft(symbolImage, position.X);
-            Canvas.SetTop(symbolImage, position.Y);
+        /*        private void DrawSymbol(Point position)
+                {
+                    SymbolType drawnSymbolType = (SymbolType)_selectedSymbolBtn.Tag;
+                    Image symbolImage = UIHelper.CreateSymbolImage(drawnSymbolType, _viewModel.SymbolImagePaths[drawnSymbolType], 100);
+                    //symbolImage.MouseDown += SymbolIcon_MouseDown;
 
-            Symbol drawnSymbol = new(drawnSymbolType, new(), position);
-            _viewModel.RegisterSymbol(symbolImage, drawnSymbol);
+                    position.Offset(-50, -50);
+                    Canvas.SetLeft(symbolImage, position.X);
+                    Canvas.SetTop(symbolImage, position.Y);
 
-            NetworkCanvas.Children.Add(symbolImage);
-            _selectedSymbolBtn.IsChecked = false;
-            _selectedSymbolBtn = null;
-        }
+                    Symbol drawnSymbol = new(drawnSymbolType, new(), position);
+                    _viewModel.RegisterSymbol(symbolImage, drawnSymbol);
 
-        private void LoadPlugins()
+                    NetworkCanvas.Children.Add(symbolImage);
+                    _selectedSymbolBtn.IsChecked = false;
+                    _selectedSymbolBtn = null;
+                }*/
+
+/*        private void LoadPlugins()
         {
             try
             {
@@ -126,7 +126,7 @@ namespace electric_network_editor
             {
                 MessageBox.Show($"Failed to load plugins: {ex.Message}");
             }
-        }
+        }*/
     }
 }
 

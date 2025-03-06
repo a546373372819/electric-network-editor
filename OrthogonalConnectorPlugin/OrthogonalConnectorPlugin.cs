@@ -13,72 +13,46 @@ namespace OrthogonalConnectorPlugin
     [Export(typeof(PluginContracts.ISidebarCommand))]
     public class OrthogonalConnectorPlugin : ISidebarCommand
     {
-        string imgPath = "Images/connect.png";
+        string imgPath = "pack://application:,,,/OrthogonalConnectorPlugin;component/Icons/connect.png";
         private CanvasWrapper _canvas;
-        private UIElement _selectedSymbol=null;
 
+        public INetworkCanvasStrategy DrawingStrategy => new OrthogonalConnectionStrategy();
 
-        [ImportingConstructor]
-        public OrthogonalConnectorPlugin(CanvasWrapper canvas)
+        public RadioButton Button
         {
-            _canvas = canvas;
-        }
-
-        public void Clicked(object sender, RoutedEventArgs e)
-        {
-            _canvas.SetMouseDown(CanvasClicked);
-        }
-
-        private void CanvasClicked(object sender, MouseButtonEventArgs e)
-        {
-            Point clickPosition = _canvas.GetClickPosition(e);
-
-            UIElement clickedElement = _canvas.InputHitTest(clickPosition) as UIElement;
-
-            if (clickedElement != null && !(clickedElement is Canvas))
+            get
             {
-                if (_selectedSymbol != null)
+                RadioButton rb = new RadioButton { Name = "NetworkConnectBtn" };
+
+                // Event handlers
+               /* rb.Click += Clicked;
+                rb.Unchecked += ConnectionBtn_Unchecked;*/
+
+                // Create and set the image
+                var img = new Image
                 {
-                    Point parent = _canvas.TranslatePoint(_selectedSymbol);
-                    Point child = _canvas.TranslatePoint(clickedElement);
+                    Source = new BitmapImage(new Uri(imgPath)),
+                    Width = 30,
+                    Height = 30
+                };
+                rb.Content = img;
 
-                    parent.X += 50;
-                    parent.Y += 50;
-                    child.X += 50;
-                    child.Y += 50;
-
-
-                    LineHelper.ConnectPoints(_canvas, parent, child);
-                    _selectedSymbol = null;
-                }
-                else _selectedSymbol = clickedElement;
+                return rb;
             }
+        }
 
 
-            
-          
 
+/*        public void Clicked(object sender, RoutedEventArgs e)
+        {
+            _canvas.SetMouseDown(OrthogonalConnectionStrategy.);
         }
 
         private void ConnectionBtn_Unchecked(object sender, RoutedEventArgs e)
         {
             _selectedSymbol = null;
             _canvas.RemoveMouseDown(CanvasClicked);
-        }
+        }*/
 
-        public RadioButton GetButton()
-        {
-            RadioButton rb = new() {Name= "NetworkConnectBtn" };
-            rb.Click += Clicked;
-            rb.Unchecked += ConnectionBtn_Unchecked;
-            var img = new Image
-            {
-                Source = new BitmapImage(new Uri(imgPath, UriKind.Relative)),
-                Width = 30,
-                Height = 30
-            };
-            rb.Content = img;
-            return rb;
-        }
     }
 }
