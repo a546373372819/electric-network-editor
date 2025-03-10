@@ -11,7 +11,7 @@
         <vm:CommandSidebarVM />
     </UserControl.DataContext>
     
-    <ItemsControl x:Name="CommandSidebar" ItemsSource="{Binding CommandButtons}">
+    <ItemsControl  x:Name="CommandSidebar" ItemsSource="{Binding CommandButtons}">
 
         <ItemsControl.Resources>
             <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
@@ -28,7 +28,7 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <RadioButton />
+                <RadioButton   />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

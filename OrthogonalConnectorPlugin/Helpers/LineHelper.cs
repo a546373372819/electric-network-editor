@@ -35,7 +35,7 @@ namespace OrthogonalConnectorPlugin.Helpers
 
         }
 
-        private static void DrawSingleLine(CanvasWrapper NetworkCanvas, Point parent, Point child)
+        private static Line DrawSingleLine(CanvasWrapper NetworkCanvas, Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -88,7 +88,7 @@ namespace OrthogonalConnectorPlugin.Helpers
                 StrokeThickness = 5
             };
 
-            NetworkCanvas.AddChild(connectionLine);
+            return connectionLine;
         }
 
         private static void DrawTwoLines(CanvasWrapper NetworkCanvas, Point parent, Point child)

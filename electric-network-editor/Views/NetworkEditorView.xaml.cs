@@ -1,6 +1,4 @@
-﻿using electric_network_editor.Helpers;
-using electric_network_editor.Model;
-using electric_network_editor.ViewModel;
+﻿using electric_network_editor.ViewModels;
 using PluginContracts;
 using System;
 using System.Collections.Generic;
@@ -29,7 +27,7 @@ namespace electric_network_editor
     /// </summary>
     public partial class NetworkEditorView : Window
     {
-        private readonly MainViewModel _viewModel = new();
+        private readonly NetworkEditorVM _viewModel = new();
         private RadioButton _selectedSymbolBtn;
         private UIElement _selectedSymbol;
 
@@ -41,15 +39,10 @@ namespace electric_network_editor
         public NetworkEditorView()
         {
             InitializeComponent();
-/*            LoadPlugins();
-            CreateSymbolButtons();*/
+
         }
 
-        private void SymbolButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton button)
-                _selectedSymbolBtn = button;
-        }
+
 
 
         /*        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -73,60 +66,60 @@ namespace electric_network_editor
                     Sidebar.Children.Add(_sidebarCommands.First().GetButton());
                 }*/
 
-        /*        private void DrawSymbol(Point position)
-                {
-                    SymbolType drawnSymbolType = (SymbolType)_selectedSymbolBtn.Tag;
-                    Image symbolImage = UIHelper.CreateSymbolImage(drawnSymbolType, _viewModel.SymbolImagePaths[drawnSymbolType], 100);
-                    //symbolImage.MouseDown += SymbolIcon_MouseDown;
-
-                    position.Offset(-50, -50);
-                    Canvas.SetLeft(symbolImage, position.X);
-                    Canvas.SetTop(symbolImage, position.Y);
-
-                    Symbol drawnSymbol = new(drawnSymbolType, new(), position);
-                    _viewModel.RegisterSymbol(symbolImage, drawnSymbol);
-
-                    NetworkCanvas.Children.Add(symbolImage);
-                    _selectedSymbolBtn.IsChecked = false;
-                    _selectedSymbolBtn = null;
-                }*/
-
-/*        private void LoadPlugins()
+        /*private void DrawSymbol(Point position)
         {
-            try
-            {
+            SymbolType drawnSymbolType = (SymbolType)_selectedSymbolBtn.Tag;
+            Image symbolImage = UIHelper.CreateSymbolImage(drawnSymbolType, _viewModel.SymbolImagePaths[drawnSymbolType], 100);
+            //symbolImage.MouseDown += SymbolIcon_MouseDown;
 
-                string pluginsPath = "Plugins";
+            position.Offset(-50, -50);
+            Canvas.SetLeft(symbolImage, position.X);
+            Canvas.SetTop(symbolImage, position.Y);
 
+            Symbol drawnSymbol = new(drawnSymbolType, new(), position);
+            _viewModel.RegisterSymbol(symbolImage, drawnSymbol);
 
-                var pluginAssemblies = Directory.GetFiles(pluginsPath, "*.dll")
-                                                .Select(Assembly.LoadFrom)
-                                                .ToList();
-
-                var configuration = new ContainerConfiguration()
-                    .WithAssemblies(pluginAssemblies)
-                    .WithProvider(new CanvasExportProvider(new CanvasWrapper(NetworkCanvas)));
-
-                using (var container = configuration.CreateContainer())
-                {
-
-                    _sidebarCommands = container.GetExports<ISidebarCommand>();
-
-                    if (_sidebarCommands?.Any() == true)
-                    {
-                        MessageBox.Show($"{_sidebarCommands.Count()} plugins loaded successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("No plugins found in the Plugins folder.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load plugins: {ex.Message}");
-            }
+            NetworkCanvas.Children.Add(symbolImage);
+            _selectedSymbolBtn.IsChecked = false;
+            _selectedSymbolBtn = null;
         }*/
+
+        /*        private void LoadPlugins()
+                {
+                    try
+                    {
+
+                        string pluginsPath = "Plugins";
+
+
+                        var pluginAssemblies = Directory.GetFiles(pluginsPath, "*.dll")
+                                                        .Select(Assembly.LoadFrom)
+                                                        .ToList();
+
+                        var configuration = new ContainerConfiguration()
+                            .WithAssemblies(pluginAssemblies)
+                            .WithProvider(new CanvasExportProvider(new CanvasWrapper(NetworkCanvas)));
+
+                        using (var container = configuration.CreateContainer())
+                        {
+
+                            _sidebarCommands = container.GetExports<ISidebarCommand>();
+
+                            if (_sidebarCommands?.Any() == true)
+                            {
+                                MessageBox.Show($"{_sidebarCommands.Count()} plugins loaded successfully.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("No plugins found in the Plugins folder.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load plugins: {ex.Message}");
+                    }
+                }*/
     }
 }
 

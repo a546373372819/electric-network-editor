@@ -1,4 +1,9 @@
-﻿using System;
+﻿using electric_network_editor.Events;
+using electric_network_editor.Models;
+using electric_network_editor.ViewModels;
+using PluginContracts;
+using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +25,14 @@ namespace electric_network_editor.Views
     /// </summary>
     public partial class NetworkCanvasView : UserControl
     {
+
         public NetworkCanvasView()
         {
             InitializeComponent();
+            NetworkCanvasVM vm=this.DataContext as NetworkCanvasVM;
+            vm.NetworkCanvas = ic;
+
         }
+
     }
 }

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "electric-network-editor", "electric-network-editor\electric-network-editor.csproj", "{723F4939-F0E6-4CC6-A40F-CB8E69A66F84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrthogonalConnectorPlugin", "OrthogonalConnectorPlugin\OrthogonalConnectorPlugin.csproj", "{50CB88DF-3A18-4A7D-88CF-654BC8B186FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrthogonalConnectorPlugin", "OrthogonalConnectorPlugin\OrthogonalConnectorPlugin.csproj", "{50CB88DF-3A18-4A7D-88CF-654BC8B186FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginContracts", "PluginContracts\PluginContracts.csproj", "{77508093-F2E1-41E8-B17F-42F445E0CA91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginContracts", "PluginContracts\PluginContracts.csproj", "{77508093-F2E1-41E8-B17F-42F445E0CA91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

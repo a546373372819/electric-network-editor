@@ -1,5 +1,9 @@
-﻿using electric_network_editor.Models;
+﻿using electric_network_editor.Events;
+using electric_network_editor.Models;
+using electric_network_editor.Models.SidebarCommands;
 using PluginContracts;
+using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,32 +15,68 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace electric_network_editor.ViewModels
 {
     public class CommandSidebarVM
     {
-        private IEnumerable<ISidebarCommand> _sidebarPlugins;
+        IEventAggregator _ea;
+        private List<ISidebarCommand> _sidebarCommands =new List<ISidebarCommand>();
+        public DelegateCommand<INetworkCanvasStrategy> ButtonCommand { get; }
+
         public ObservableCollection<RadioButton> CommandButtons { get; set; } = new ObservableCollection<RadioButton>();
 
         public CommandSidebarVM()
         {
-
+            _ea = EventAggregatorProvider.Instance;
+            ButtonCommand = new DelegateCommand<INetworkCanvasStrategy>(On_StrategyChanged);
             LoadPlugins();
+            LoadCoreCommands();
+            CreateButtons();
+     
+        }
 
-            foreach(ISidebarCommand c in _sidebarPlugins)
+        private void CreateButtons()
+        {
+            foreach (ISidebarCommand c in _sidebarCommands)
             {
-                CommandButtons.Add(c.Button);
+                RadioButton rb = c.Button;
+                ConfigureButton(rb, c.CanvasStrategy);
+                CommandButtons.Add(rb);
             }
         }
 
+        void ConfigureButton(RadioButton rb, INetworkCanvasStrategy s)
+        {
+            rb.GroupName = "SidebarCommand";
+            rb.Command = ButtonCommand;
+            rb.CommandParameter = s;
+        }
+
+        void On_StrategyChanged(INetworkCanvasStrategy s)
+        {
+            MessageBox.Show("{_sidebarCommands.Count()} plugins loaded successfully.");
+            _ea.GetEvent<StrategyChangedEvent>().Publish(s);
+        }
+        void bla(object o, RoutedEventArgs e)
+        {
+            MessageBox.Show($"{((RadioButton)o).Tag} plugins loaded successfully.");
+        }
+
+        private void LoadCoreCommands()
+        {
+
+            _sidebarCommands.Add(new SourceSymbolCommand());
+
+        }
 
         private void LoadPlugins()
         {
             try
             {
 
-                string pluginsPath = "Plugins";
+                string pluginsPath = "../../../Plugins";
 
 
                 var pluginAssemblies = Directory.GetFiles(pluginsPath, "*.dll")
@@ -48,11 +88,11 @@ namespace electric_network_editor.ViewModels
 
                 using (var container = configuration.CreateContainer())
                 {
-                    _sidebarPlugins = container.GetExports<ISidebarCommand>();
+                    _sidebarCommands = container.GetExports<ISidebarCommand>().ToList();
 
-                    if (_sidebarPlugins?.Any() == true)
+                    if (_sidebarCommands?.Any() == true)
                     {
-                        MessageBox.Show($"{_sidebarPlugins.Count()} plugins loaded successfully.");
+                        MessageBox.Show($"{_sidebarCommands.Count()} plugins loaded successfully.");
                     }
                     else
                     {

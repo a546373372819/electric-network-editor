@@ -3,9 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:electric_network_editor.ViewModels"
              xmlns:local="clr-namespace:electric_network_editor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas x:Name="NetworkCanvas" Background="White"/>
+    <UserControl.DataContext>
+        <vm:NetworkCanvasVM />
+    </UserControl.DataContext>
 
+        <ItemsControl x:Name="ic" ItemsSource="{Binding NetworkSymbols}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas x:Name="MyCanvas" Background="Transparent"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+            <Style>
+                <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
+                <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Image Source="{Binding ImgSrc}" Width="100" Height="100"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>

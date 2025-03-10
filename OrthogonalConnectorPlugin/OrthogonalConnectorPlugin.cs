@@ -13,16 +13,15 @@ namespace OrthogonalConnectorPlugin
     [Export(typeof(PluginContracts.ISidebarCommand))]
     public class OrthogonalConnectorPlugin : ISidebarCommand
     {
-        string imgPath = "pack://application:,,,/OrthogonalConnectorPlugin;component/Icons/connect.png";
-        private CanvasWrapper _canvas;
+        public string ImgSrc => "pack://application:,,,/OrthogonalConnectorPlugin;component/Icons/connect.png";
 
-        public INetworkCanvasStrategy DrawingStrategy => new OrthogonalConnectionStrategy();
+        public INetworkCanvasStrategy CanvasStrategy => new OrthogonalConnectionStrategy();
 
         public RadioButton Button
         {
             get
             {
-                RadioButton rb = new RadioButton { Name = "NetworkConnectBtn" };
+                RadioButton rb = new RadioButton();
 
                 // Event handlers
                /* rb.Click += Clicked;
@@ -31,28 +30,28 @@ namespace OrthogonalConnectorPlugin
                 // Create and set the image
                 var img = new Image
                 {
-                    Source = new BitmapImage(new Uri(imgPath)),
+                    Source = new BitmapImage(new Uri(ImgSrc)),
                     Width = 30,
                     Height = 30
                 };
                 rb.Content = img;
-
                 return rb;
             }
         }
 
 
 
-/*        public void Clicked(object sender, RoutedEventArgs e)
-        {
-            _canvas.SetMouseDown(OrthogonalConnectionStrategy.);
-        }
 
-        private void ConnectionBtn_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _selectedSymbol = null;
-            _canvas.RemoveMouseDown(CanvasClicked);
-        }*/
+        /*        public void Clicked(object sender, RoutedEventArgs e)
+                {
+                    _canvas.SetMouseDown(OrthogonalConnectionStrategy.);
+                }
+
+                private void ConnectionBtn_Unchecked(object sender, RoutedEventArgs e)
+                {
+                    _selectedSymbol = null;
+                    _canvas.RemoveMouseDown(CanvasClicked);
+                }*/
 
     }
 }

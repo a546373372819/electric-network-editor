@@ -2,6 +2,7 @@
 using PluginContracts;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,35 +14,42 @@ namespace OrthogonalConnectorPlugin
 {
     public class OrthogonalConnectionStrategy : INetworkCanvasStrategy
     {
-        private UIElement _selectedSymbol = null;
+        private Point? _selectedSymbol = null;
 
-        public void Execute(CanvasWrapper _canvas, MouseButtonEventArgs e)
+        public ObservableCollection<Symbol> NetworkSymbols { get; set; }= null;
+
+        public void Execute()
         {
-            Point clickPosition = _canvas.GetClickPosition(e);
-
-            UIElement clickedElement = _canvas.InputHitTest(clickPosition) as UIElement;
-
-            if (clickedElement != null && !(clickedElement is Canvas))
+/*
+            if (_selectedSymbol != null)
             {
-                if (_selectedSymbol != null)
-                {
-                    Point parent = _canvas.TranslatePoint(_selectedSymbol);
-                    Point child = _canvas.TranslatePoint(clickedElement);
+                Point parent = (Point)_selectedSymbol;
+                Point child = p.point;
 
-                    parent.X += 50;
-                    parent.Y += 50;
-                    child.X += 50;
-                    child.Y += 50;
+                parent.X += 50;
+                parent.Y += 50;
+                child.X += 50;
+                child.Y += 50;
 
 
-                    LineHelper.ConnectPoints(_canvas, parent, child);
-                    _selectedSymbol = null;
-                }
-                else _selectedSymbol = clickedElement;
+                LineHelper.ConnectPoints(p.canvas, parent, child);
+                _selectedSymbol = null;
             }
+            else _selectedSymbol = p.point;
+            
+*/
 
 
+        }
 
+        public void Selected(ItemsControl canvas, ObservableCollection<Symbol> networkSymbols)
+        {
+            
+        }
+
+        public void Unselected(ItemsControl canvas)
+        {
+           
         }
     }
 }
