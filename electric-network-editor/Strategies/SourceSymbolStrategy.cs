@@ -14,7 +14,7 @@ namespace electric_network_editor.Strategies
     {
         
 
-        public ObservableCollection<Symbol> NetworkSymbols { get; set; } = null;
+        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -22,7 +22,7 @@ namespace electric_network_editor.Strategies
 
 
             Point mousePos = e.GetPosition((UIElement)sender);
- 
+
 
             var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
             if (hitTestResult?.VisualHit is not Image )
@@ -31,7 +31,7 @@ namespace electric_network_editor.Strategies
                 mousePos.Y -= 50;
                 Source source = new Source(DateTime.Now.Second, mousePos);
 
-                NetworkSymbols.Add(source);
+                _networkCanvasElements.Add(source);
             }
 
 
@@ -42,16 +42,16 @@ namespace electric_network_editor.Strategies
 
 
 
-        public void Selected(ItemsControl canvas, ObservableCollection<Symbol> networkSymbols)
+        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
         {
             canvas.MouseDown += Execute;
-            NetworkSymbols=networkSymbols;
+            _networkCanvasElements = networkCanvasElements;
         }
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-            NetworkSymbols = null;
+            _networkCanvasElements = null;
         }
     }
 }

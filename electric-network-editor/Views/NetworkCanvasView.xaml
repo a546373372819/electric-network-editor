@@ -11,7 +11,7 @@
         <vm:NetworkCanvasVM />
     </UserControl.DataContext>
 
-        <ItemsControl x:Name="ic" ItemsSource="{Binding NetworkSymbols}">
+        <ItemsControl x:Name="ic" ItemsSource="{Binding networkCanvasElements}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas x:Name="MyCanvas" Background="Transparent"/>
@@ -25,7 +25,7 @@
         </ItemsControl.ItemContainerStyle>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Image Source="{Binding ImgSrc}" Width="100" Height="100"/>
+                <ContentPresenter Content="{Binding UIElement}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

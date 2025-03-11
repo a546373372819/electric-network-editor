@@ -22,14 +22,14 @@ namespace electric_network_editor.ViewModels
     {
         private IEventAggregator _ea;
         public ItemsControl NetworkCanvas { get; set; }
-        public ObservableCollection<Symbol> NetworkSymbols { get; } = new ObservableCollection<Symbol>();
+        public ObservableCollection<NetworkCanvasElement> networkCanvasElements { get; } = new ObservableCollection<NetworkCanvasElement>();
         private INetworkCanvasStrategy _currentStrategy = null;
 
         public NetworkCanvasVM()
         {
             _ea = EventAggregatorProvider.Instance;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
-            
+            networkCanvasElements.Add(new Source(1,new Point(200,200)));
         }
 
 
@@ -41,7 +41,8 @@ namespace electric_network_editor.ViewModels
                 _currentStrategy.Unselected(NetworkCanvas);
             }
 
-            s.Selected(NetworkCanvas,NetworkSymbols);
+            s.Selected(NetworkCanvas, networkCanvasElements);
+            _currentStrategy = s;
         }
 
 

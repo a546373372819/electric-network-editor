@@ -15,5 +15,7 @@ namespace electric_network_editor.Models.Symbols
         }
 
         public override string ImgSrc => "Images/circle.png";
+
+        public override UIElement UIElement => throw new NotImplementedException();
     }
 }

@@ -56,13 +56,9 @@ namespace electric_network_editor.ViewModels
 
         void On_StrategyChanged(INetworkCanvasStrategy s)
         {
-            MessageBox.Show("{_sidebarCommands.Count()} plugins loaded successfully.");
             _ea.GetEvent<StrategyChangedEvent>().Publish(s);
         }
-        void bla(object o, RoutedEventArgs e)
-        {
-            MessageBox.Show($"{((RadioButton)o).Tag} plugins loaded successfully.");
-        }
+
 
         private void LoadCoreCommands()
         {

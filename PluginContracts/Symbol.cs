@@ -11,20 +11,16 @@ using System.Windows.Media.TextFormatting;
 namespace PluginContracts
 {
 
-    public abstract class Symbol
+    public abstract class Symbol:NetworkCanvasElement
     {
         int Id;
         List<Symbol>? Children;
-        public Point Position { get; }
         public abstract string ImgSrc { get; }
 
-        protected Symbol(int id, Point position)
+        protected Symbol(int id, Point position) : base(position)
         {
             this.Id = id;
             this.Children = new List<Symbol>();
-            this.Position = position;
-
-
         }
     }
 }

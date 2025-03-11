@@ -13,8 +13,9 @@ namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static void ConnectPoints(CanvasWrapper NetworkCanvas, Point parent, Point child)
+        public static List<Line> CreateLines( Point parent, Point child)
         {
+            List<Line> result = new List<Line>();
 
             double x1 = parent.X;
             double y1 = parent.Y;
@@ -25,17 +26,18 @@ namespace OrthogonalConnectorPlugin.Helpers
             if (Math.Abs(x2 - x1) > 50 & Math.Abs(y2 - y1) > 50)
             {
 
-                DrawTwoLines(NetworkCanvas, parent, child);
+                 result.AddRange(GetTwoLines( parent, child));
             }
             else
             {
-                DrawSingleLine(NetworkCanvas, parent, child);
+                result.Add(GetSingleLine( parent, child));
 
             }
+            return result;
 
         }
 
-        private static Line DrawSingleLine(CanvasWrapper NetworkCanvas, Point parent, Point child)
+        private static Line GetSingleLine( Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -91,7 +93,7 @@ namespace OrthogonalConnectorPlugin.Helpers
             return connectionLine;
         }
 
-        private static void DrawTwoLines(CanvasWrapper NetworkCanvas, Point parent, Point child)
+        private static List<Line> GetTwoLines(Point parent, Point child)
         {
 
             double x1 = parent.X;
@@ -142,8 +144,12 @@ namespace OrthogonalConnectorPlugin.Helpers
                 StrokeThickness = 5
             };
 
-            NetworkCanvas.AddChild(connectionLineHor);
-            NetworkCanvas.AddChild(connectionLineVert);
+            
+            List<Line> lines = new List<Line>();
+            lines.Add(connectionLineVert);
+            lines.Add(connectionLineHor);
+            return lines;
+
 
 
         }

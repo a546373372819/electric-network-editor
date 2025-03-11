@@ -12,8 +12,8 @@ namespace PluginContracts
 {
     public interface INetworkCanvasStrategy
     {
-        public ObservableCollection<Symbol> NetworkSymbols { get; set; }
-        void Selected(ItemsControl canvas, ObservableCollection<Symbol> networkSymbols);
+        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; }
+        void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkElements);
         void Unselected(ItemsControl canvas);
 
     }

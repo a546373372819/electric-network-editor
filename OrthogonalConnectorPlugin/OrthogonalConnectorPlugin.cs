@@ -23,11 +23,7 @@ namespace OrthogonalConnectorPlugin
             {
                 RadioButton rb = new RadioButton();
 
-                // Event handlers
-               /* rb.Click += Clicked;
-                rb.Unchecked += ConnectionBtn_Unchecked;*/
 
-                // Create and set the image
                 var img = new Image
                 {
                     Source = new BitmapImage(new Uri(ImgSrc)),
@@ -39,19 +35,6 @@ namespace OrthogonalConnectorPlugin
             }
         }
 
-
-
-
-        /*        public void Clicked(object sender, RoutedEventArgs e)
-                {
-                    _canvas.SetMouseDown(OrthogonalConnectionStrategy.);
-                }
-
-                private void ConnectionBtn_Unchecked(object sender, RoutedEventArgs e)
-                {
-                    _selectedSymbol = null;
-                    _canvas.RemoveMouseDown(CanvasClicked);
-                }*/
 
     }
 }
