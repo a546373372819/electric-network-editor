@@ -1,4 +1,5 @@
-﻿using OrthogonalConnectorPlugin.Helpers;
+﻿using DryIoc;
+using OrthogonalConnectorPlugin.Helpers;
 using OrthogonalConnectorPlugin.Models;
 using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
@@ -22,7 +23,7 @@ namespace OrthogonalConnectorPlugin
 {
     public class OrthogonalConnectionStrategy : INetworkCanvasStrategy
     {
-        private ClickedSymbolInfo _parentSymbolClickInfo = null;
+        private SymbolClickInfo _parentSymbolClickInfo = null;
         public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; }= null;
         public DelegateCommand<IFormattable> SymbolClickCommand { get; }
 
@@ -40,14 +41,10 @@ namespace OrthogonalConnectorPlugin
                 if (_parentSymbolClickInfo != null)
                 {
                    
-                    ClickedSymbolInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
+                    SymbolClickInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
 
-                    List<Shape> lines = LineHelper.CreateLines(_parentSymbolClickInfo, childSymbolClickInfo);
-
-                    foreach (Shape l in lines)
-                    {
-                        _networkCanvasElements.Add(new SymbolConnector(l));
-                    }
+                    Shape line = LineHelper.CreateLine(_parentSymbolClickInfo, childSymbolClickInfo);
+                    _networkCanvasElements.Add(new OrthogonalLineConnector(line,_parentSymbolClickInfo.Symbol,childSymbolClickInfo.Symbol));
 
                     _parentSymbolClickInfo = null;
                 }
@@ -63,11 +60,11 @@ namespace OrthogonalConnectorPlugin
 
 
 
-        ClickedSymbolInfo GetClickSymbolInfo(Point mouseClickPos,object sender, Image image)
+        SymbolClickInfo GetClickSymbolInfo(Point mouseClickPos,object sender, Image image)
         {
-            Point SymbolCenter = GetSymbolCenter(sender, image);
-            double SymbolOffset = image.ActualHeight / 2;
-            ClickedSymbolInfo ClickedSymbolInfo = new ClickedSymbolInfo(mouseClickPos, SymbolCenter, SymbolOffset);
+            Symbol? symbol = image.Tag as Symbol ?? throw new Exception("Image Tag Empty");
+
+            SymbolClickInfo ClickedSymbolInfo = new SymbolClickInfo(mouseClickPos, symbol);
 
             return ClickedSymbolInfo;
         }

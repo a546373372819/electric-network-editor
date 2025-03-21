@@ -14,51 +14,49 @@ namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static List<Shape> CreateLines( ClickedSymbolInfo parent, ClickedSymbolInfo child)
+        public static Shape CreateLine( SymbolClickInfo parent, SymbolClickInfo child)
         {
-            List<Shape> result = new List<Shape>();
 
-            double x1 = parent.SymbolCenter.X;
-            double y1 = parent.SymbolCenter.Y;
+            double x1 = parent.GetSymbolCenter().X;
+            double y1 = parent.GetSymbolCenter().Y;
 
-            double x2 = child.SymbolCenter.X;
-            double y2 = child.SymbolCenter.Y;
+            double x2 = child.GetSymbolCenter().X;
+            double y2 = child.GetSymbolCenter().Y;
 
             if (Math.Abs(x2 - x1) > 50 & Math.Abs(y2 - y1) > 50)
             {
 
-                 result.Add(GetPolyline(parent, child));
+                 return GetPolyline(parent, child);
             }
             else
             {
-                result.Add(GetSingleLine(parent, child));
+                return GetSingleLine(parent, child);
 
             }
-            return result;
 
         }
 
-        private static Line GetSingleLine(ClickedSymbolInfo parent, ClickedSymbolInfo child)
+        private static Line GetSingleLine(SymbolClickInfo parent, SymbolClickInfo child)
         {
 
-            double x1 = parent.SymbolCenter.X;
-            double y1 = parent.SymbolCenter.Y;
+            double x1 = parent.GetSymbolCenter().X;
+            double y1 = parent.GetSymbolCenter().Y;
 
-            double x2 = child.SymbolCenter.X;
-            double y2 = child.SymbolCenter.Y;
+            double x2 = child.GetSymbolCenter().X;
+            double y2 = child.GetSymbolCenter().Y;
 
 
-            if (Math.Abs(x2 - x1) > parent.SymbolOffset)
+            if (Math.Abs(x2 - x1) > parent.GetSymbolOffset())
             {
                 if (x2 > x1)
                 {
-                    x2 -= child.SymbolOffset;
-                    x1 += parent.SymbolOffset;
+                    x2 -= child.GetSymbolOffset();
+                    x1 += parent.GetSymbolOffset();
                 }
                 else
                 {
-                    x2 += child.SymbolOffset;
-                    x1 -= parent.SymbolOffset;
+                    x2 += child.GetSymbolOffset();
+                    x1 -= parent.GetSymbolOffset();
                 }
                 y2 = y1=parent.ClickPoint.Y;
 
@@ -67,13 +65,13 @@ namespace OrthogonalConnectorPlugin.Helpers
             {
                 if (y2 > y1)
                 {
-                    y2 -= child.SymbolOffset;
-                    y1 += parent.SymbolOffset;
+                    y2 -= child.GetSymbolOffset();
+                    y1 += parent.GetSymbolOffset();
                 }
                 else
                 {
-                    y2 += child.SymbolOffset;
-                    y1 -= parent.SymbolOffset;
+                    y2 += child.GetSymbolOffset();
+                    y1 -= parent.GetSymbolOffset();
                 }
                 x2 = x1 = parent.ClickPoint.X;
             }
@@ -94,31 +92,31 @@ namespace OrthogonalConnectorPlugin.Helpers
             return connectionLine;
         }
 
-        public static Shape GetPolyline(ClickedSymbolInfo parent, ClickedSymbolInfo child)
+        public static Polyline GetPolyline(SymbolClickInfo parent, SymbolClickInfo child)
         {
-            double x1 = parent.SymbolCenter.X;
-            double y1 = parent.SymbolCenter.Y;
+            double x1 = parent.GetSymbolCenter().X;
+            double y1 = parent.GetSymbolCenter().Y;
 
-            double x2 = child.SymbolCenter.X;
-            double y2 = child.SymbolCenter.Y;
+            double x2 = child.GetSymbolCenter().X;
+            double y2 = child.GetSymbolCenter().Y;
 
 
             if (x2 > x1)
             {
-                x2 -= child.SymbolOffset;
+                x2 -= child.GetSymbolOffset();
             }
             else
             {   
-                x2 += child.SymbolOffset;
+                x2 += child.GetSymbolOffset();
             }
 
             if (y2 > y1)
             {
-                y1 += parent.SymbolOffset;
+                y1 += parent.GetSymbolOffset();
             }
             else
             {
-                y1 -= parent.SymbolOffset;
+                y1 -= parent.GetSymbolOffset();
             }
 
             y2 = child.ClickPoint.Y;

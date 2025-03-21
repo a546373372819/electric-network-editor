@@ -1,6 +1,7 @@
 ﻿using electric_network_editor.Events;
 using electric_network_editor.Models;
 using electric_network_editor.Models.SidebarCommands;
+using electric_network_editor.Services;
 using PluginContracts.Interfaces;
 using Prism.Commands;
 using Prism.Events;
@@ -77,6 +78,8 @@ namespace electric_network_editor.ViewModels
             _sidebarCommands.Add(new SourceSymbolCommand());
 
             _sidebarCommands.Add(new NodeSymbolCommand());
+
+            _sidebarCommands.Add(new DeleteSymbolCommand(ConnectorService.Instance));
 
 
         }
