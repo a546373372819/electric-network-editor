@@ -7,13 +7,12 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace PluginContracts
+namespace PluginContracts.Interfaces
 {
     public interface ISidebarCommand
     {
         string ImgSrc { get; }
         INetworkCanvasStrategy CanvasStrategy { get; }
-        RadioButton Button { get; }
 
     }
 }

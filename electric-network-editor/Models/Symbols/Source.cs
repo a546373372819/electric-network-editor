@@ -1,4 +1,4 @@
-﻿using PluginContracts;
+﻿using PluginContracts.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +17,14 @@ namespace electric_network_editor.Models.Symbols
 
         public override UIElement UIElement { get; }
 
-        public Source(int id, Point position) : base(id, position)
+        public Source(Point position) : base(position)
         {
             UIElement = new Image
             {
                 Source = new BitmapImage(new Uri(ImgSrc)),
-                Width = 100,
-                Height = 100,
+                Width = Size,
+                Height = Size,
+                Tag = this
             };
         }
 

@@ -10,11 +10,11 @@ using System.Windows.Media.Imaging;
 
 namespace electric_network_editor.Models.SidebarCommands
 {
-    public class SourceSymbolCommand : ISidebarCommand
+    public class NodeSymbolCommand : ISidebarCommand
     {
-        public string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/triangle.png";
+        public string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/circle.png";
 
-        public INetworkCanvasStrategy CanvasStrategy => new SourceSymbolStrategy();
+        public INetworkCanvasStrategy CanvasStrategy => new NodeSymbolStrategy();
 
 
     }

@@ -1,5 +1,5 @@
 ﻿using electric_network_editor.ViewModels;
-using PluginContracts;
+using PluginContracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Composition;

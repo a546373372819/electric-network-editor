@@ -1,12 +1,14 @@
 ﻿using OrthogonalConnectorPlugin.Helpers;
 using OrthogonalConnectorPlugin.Models;
-using PluginContracts;
+using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,74 +22,79 @@ namespace OrthogonalConnectorPlugin
 {
     public class OrthogonalConnectionStrategy : INetworkCanvasStrategy
     {
-        private Point? _selectedSymbol = null;
-
+        private ClickedSymbolInfo _parentSymbolClickInfo = null;
         public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; }= null;
         public DelegateCommand<IFormattable> SymbolClickCommand { get; }
 
-        public OrthogonalConnectionStrategy()
-        {
-            SymbolClickCommand = new DelegateCommand<IFormattable>(Execute);
-        }
 
-        public void Execute(IFormattable point)
+        public void Execute(object sender, MouseButtonEventArgs e)
         {
 
+            Point mousePos = e.GetPosition((UIElement)sender);
 
-            if (_selectedSymbol != null)
+
+            var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
+            if (hitTestResult?.VisualHit is Image image)
             {
-                Point parent = (Point)_selectedSymbol;
-                Point child = (Point)point;
 
-                parent.X += 50;
-                parent.Y += 50;
-                child.X += 50;
-                child.Y += 50;
-
-
-                List<Line> lines = LineHelper.CreateLines(parent, child);
-
-                foreach (Line l in lines)
+                if (_parentSymbolClickInfo != null)
                 {
-                    _networkCanvasElements.Add(new SymbolConnector(l));
+                   
+                    ClickedSymbolInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
+
+                    List<Shape> lines = LineHelper.CreateLines(_parentSymbolClickInfo, childSymbolClickInfo);
+
+                    foreach (Shape l in lines)
+                    {
+                        _networkCanvasElements.Add(new SymbolConnector(l));
+                    }
+
+                    _parentSymbolClickInfo = null;
+                }
+                else
+                {
+
+                    _parentSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
                 }
 
-                _selectedSymbol = null;
             }
-            else _selectedSymbol = (Point)point;
+
+        }
 
 
 
+        ClickedSymbolInfo GetClickSymbolInfo(Point mouseClickPos,object sender, Image image)
+        {
+            Point SymbolCenter = GetSymbolCenter(sender, image);
+            double SymbolOffset = image.ActualHeight / 2;
+            ClickedSymbolInfo ClickedSymbolInfo = new ClickedSymbolInfo(mouseClickPos, SymbolCenter, SymbolOffset);
+
+            return ClickedSymbolInfo;
+        }
+
+        private Point GetSymbolCenter(object parent, Image image)
+        {
+            // Get the position of the image relative to its parent or the screen
+            Point imagePosition = image.TransformToAncestor((Visual)parent).Transform(new Point(0, 0));
+
+            // Calculate the center of the image
+            double centerX = imagePosition.X + (image.ActualWidth / 2);
+            double centerY = imagePosition.Y + (image.ActualHeight / 2);
+
+            return new Point(centerX, centerY);
         }
 
         public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
         {
             _networkCanvasElements = networkCanvasElements;
-            
 
-
-            foreach (NetworkCanvasElement networkCanvasElement in _networkCanvasElements)
-            {
-                if(networkCanvasElement is Symbol)
-                {
-                    networkCanvasElement.UIElement.InputBindings.Add(new MouseBinding(SymbolClickCommand, new MouseGesture(MouseAction.LeftClick))
-                    {
-                        CommandParameter = networkCanvasElement.Position
-                    });
-                }
-            }
-
+            canvas.MouseDown += Execute;
         }
 
         public void Unselected(ItemsControl canvas)
         {
-            foreach (NetworkCanvasElement networkCanvasElement in _networkCanvasElements)
-            {
-                if (networkCanvasElement is Symbol)
-                {
-                    networkCanvasElement.UIElement.InputBindings.Clear();
-                }
-            }
+            canvas.MouseDown -= Execute;
+
             _networkCanvasElements = null;
         }
     }

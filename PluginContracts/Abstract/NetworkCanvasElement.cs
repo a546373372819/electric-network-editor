@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PluginContracts
+namespace PluginContracts.Abstract
 {
     public abstract class NetworkCanvasElement
     {
+        private int Id {get;}
         public abstract UIElement UIElement { get; }
         public Point Position { get; }
 
         protected NetworkCanvasElement(Point position)
         {
+            Id = DateTime.Now.Second;
             Position = position;
+
         }
     }
 }

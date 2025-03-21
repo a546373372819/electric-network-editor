@@ -1,21 +1,21 @@
 ﻿using electric_network_editor.Models.Symbols;
-using PluginContracts;
+using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 using System;
-
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows;
-using System.Collections.ObjectModel;
 using System.Windows.Media;
-using PluginContracts.Interfaces;
-using PluginContracts.Abstract;
+using System.Windows;
 
 namespace electric_network_editor.Strategies
 {
-    public class SourceSymbolStrategy : INetworkCanvasStrategy
+    internal class NodeSymbolStrategy:INetworkCanvasStrategy
     {
-        
-
         public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
 
         public void Execute(object sender, MouseButtonEventArgs e)
@@ -27,18 +27,19 @@ namespace electric_network_editor.Strategies
 
 
             var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
-            if (hitTestResult?.VisualHit is not Image )
+            if (hitTestResult?.VisualHit is not Image)
             {
-                mousePos.X -= Source.Size / 2;
-                mousePos.Y -= Source.Size / 2;
-                Source source = new Source(mousePos);
+                mousePos.X -= Node.Size/2;
+                mousePos.Y -= Node.Size / 2;
+                Node node = new Node(mousePos);
 
-                _networkCanvasElements.Add(source);
+                _networkCanvasElements.Add(node);
             }
 
 
-          
-            
+
+
+
         }
 
 

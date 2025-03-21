@@ -8,19 +8,23 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.TextFormatting;
 
-namespace PluginContracts
+namespace PluginContracts.Abstract
 {
 
-    public abstract class Symbol:NetworkCanvasElement
+    public abstract class Symbol : NetworkCanvasElement
     {
-        int Id;
+
         List<Symbol>? Children;
+
+        //TODO mora biti slika??
         public abstract string ImgSrc { get; }
 
-        protected Symbol(int id, Point position) : base(position)
+        public static double Size = 100;
+
+        protected Symbol(Point position) : base(position)
         {
-            this.Id = id;
-            this.Children = new List<Symbol>();
+            Children = new List<Symbol>();
+
         }
     }
 }

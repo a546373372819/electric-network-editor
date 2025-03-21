@@ -1,4 +1,4 @@
-﻿using PluginContracts;
+﻿using PluginContracts.Interfaces;
 using Prism.Events;
 using System;
 using System.Collections.Generic;

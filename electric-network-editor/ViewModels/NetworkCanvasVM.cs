@@ -10,11 +10,12 @@ using Prism.Events;
 using Prism.Commands;
 using System.Windows.Controls;
 using electric_network_editor.Models;
-using PluginContracts;
 using electric_network_editor.Events;
 using electric_network_editor.Models.Symbols;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
+using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 
 namespace electric_network_editor.ViewModels
 {
@@ -29,7 +30,7 @@ namespace electric_network_editor.ViewModels
         {
             _ea = EventAggregatorProvider.Instance;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
-            networkCanvasElements.Add(new Source(1,new Point(200,200)));
+            networkCanvasElements.Add(new Source(new Point(200,200)));
         }
 
 

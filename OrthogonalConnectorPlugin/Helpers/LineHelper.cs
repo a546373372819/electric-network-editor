@@ -8,73 +8,74 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
 using PluginContracts;
+using OrthogonalConnectorPlugin.Models;
 
 namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static List<Line> CreateLines( Point parent, Point child)
+        public static List<Shape> CreateLines( ClickedSymbolInfo parent, ClickedSymbolInfo child)
         {
-            List<Line> result = new List<Line>();
+            List<Shape> result = new List<Shape>();
 
-            double x1 = parent.X;
-            double y1 = parent.Y;
+            double x1 = parent.SymbolCenter.X;
+            double y1 = parent.SymbolCenter.Y;
 
-            double x2 = child.X;
-            double y2 = child.Y;
+            double x2 = child.SymbolCenter.X;
+            double y2 = child.SymbolCenter.Y;
 
             if (Math.Abs(x2 - x1) > 50 & Math.Abs(y2 - y1) > 50)
             {
 
-                 result.AddRange(GetTwoLines( parent, child));
+                 result.Add(GetPolyline(parent, child));
             }
             else
             {
-                result.Add(GetSingleLine( parent, child));
+                result.Add(GetSingleLine(parent, child));
 
             }
             return result;
 
         }
 
-        private static Line GetSingleLine( Point parent, Point child)
+        private static Line GetSingleLine(ClickedSymbolInfo parent, ClickedSymbolInfo child)
         {
 
-            double x1 = parent.X;
-            double y1 = parent.Y;
+            double x1 = parent.SymbolCenter.X;
+            double y1 = parent.SymbolCenter.Y;
 
-            double x2 = child.X;
-            double y2 = child.Y;
+            double x2 = child.SymbolCenter.X;
+            double y2 = child.SymbolCenter.Y;
 
 
-            if (Math.Abs(x2 - x1) > 50)
+            if (Math.Abs(x2 - x1) > parent.SymbolOffset)
             {
                 if (x2 > x1)
                 {
-                    x2 -= 55;
-                    x1 += 55;
+                    x2 -= child.SymbolOffset;
+                    x1 += parent.SymbolOffset;
                 }
                 else
                 {
-                    x2 += 55;
-                    x1 -= 55;
+                    x2 += child.SymbolOffset;
+                    x1 -= parent.SymbolOffset;
                 }
-                y2 = y1;
+                y2 = y1=parent.ClickPoint.Y;
 
             }
             else
             {
                 if (y2 > y1)
                 {
-                    y2 -= 55;
-                    y1 += 55;
+                    y2 -= child.SymbolOffset;
+                    y1 += parent.SymbolOffset;
                 }
                 else
                 {
-                    y2 += 55;
-                    y1 -= 55;
+                    y2 += child.SymbolOffset;
+                    y1 -= parent.SymbolOffset;
                 }
-                x2 = x1;
+                x2 = x1 = parent.ClickPoint.X;
             }
 
 
@@ -93,65 +94,49 @@ namespace OrthogonalConnectorPlugin.Helpers
             return connectionLine;
         }
 
-        private static List<Line> GetTwoLines(Point parent, Point child)
+        public static Shape GetPolyline(ClickedSymbolInfo parent, ClickedSymbolInfo child)
         {
+            double x1 = parent.SymbolCenter.X;
+            double y1 = parent.SymbolCenter.Y;
 
-            double x1 = parent.X;
-            double y1 = parent.Y;
+            double x2 = child.SymbolCenter.X;
+            double y2 = child.SymbolCenter.Y;
 
-            double x2 = child.X;
-            double y2 = child.Y;
 
             if (x2 > x1)
             {
-                x2 -= 55;
+                x2 -= child.SymbolOffset;
             }
             else
-            {
-                x2 += 55;
+            {   
+                x2 += child.SymbolOffset;
             }
 
             if (y2 > y1)
             {
-                y1 += 55;
+                y1 += parent.SymbolOffset;
             }
             else
             {
-                y1 -= 55;
+                y1 -= parent.SymbolOffset;
             }
 
-            Line connectionLineVert = new()
+            y2 = child.ClickPoint.Y;
+            x1=parent.ClickPoint.X;
+
+            Polyline polyline = new()
             {
-                X1 = x1,
-                Y1 = y1,
-
-                X2 = x1,
-                Y2 = y2,
-
                 Stroke = Brushes.Black,
-                StrokeThickness = 5
+                StrokeThickness = 5,
+                Points = new PointCollection
+                {
+                    new Point(x1, y1),
+                    new Point(x1, y2),
+                    new Point(x2, y2)
+                }
             };
 
-            Line connectionLineHor = new()
-            {
-                X1 = x1,
-                Y1 = y2,
-
-                X2 = x2,
-                Y2 = y2,
-
-                Stroke = Brushes.Black,
-                StrokeThickness = 5
-            };
-
-            
-            List<Line> lines = new List<Line>();
-            lines.Add(connectionLineVert);
-            lines.Add(connectionLineHor);
-            return lines;
-
-
-
+            return polyline;
         }
 
     }

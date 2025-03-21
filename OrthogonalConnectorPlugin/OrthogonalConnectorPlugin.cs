@@ -1,5 +1,5 @@
 using OrthogonalConnectorPlugin.Helpers;
-using PluginContracts;
+using PluginContracts.Interfaces;
 using System;
 using System.Composition;
 using System.Windows;
@@ -10,30 +10,14 @@ using Point = System.Windows.Point;
 
 namespace OrthogonalConnectorPlugin
 {
-    [Export(typeof(PluginContracts.ISidebarCommand))]
+    [Export(typeof(ISidebarCommand))]
     public class OrthogonalConnectorPlugin : ISidebarCommand
     {
         public string ImgSrc => "pack://application:,,,/OrthogonalConnectorPlugin;component/Icons/connect.png";
 
         public INetworkCanvasStrategy CanvasStrategy => new OrthogonalConnectionStrategy();
 
-        public RadioButton Button
-        {
-            get
-            {
-                RadioButton rb = new RadioButton();
 
-
-                var img = new Image
-                {
-                    Source = new BitmapImage(new Uri(ImgSrc)),
-                    Width = 30,
-                    Height = 30
-                };
-                rb.Content = img;
-                return rb;
-            }
-        }
 
 
     }

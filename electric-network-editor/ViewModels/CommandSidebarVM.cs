@@ -1,7 +1,7 @@
 ﻿using electric_network_editor.Events;
 using electric_network_editor.Models;
 using electric_network_editor.Models.SidebarCommands;
-using PluginContracts;
+using PluginContracts.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace electric_network_editor.ViewModels
 {
@@ -41,11 +42,21 @@ namespace electric_network_editor.ViewModels
         {
             foreach (ISidebarCommand c in _sidebarCommands)
             {
-                RadioButton rb = c.Button;
+                RadioButton rb = new RadioButton();
+
+                var img = new Image
+                {
+                    Source = new BitmapImage(new Uri(c.ImgSrc)),
+                    Width = 30,
+                    Height = 30
+                };
+                rb.Content = img;
                 ConfigureButton(rb, c.CanvasStrategy);
                 CommandButtons.Add(rb);
             }
         }
+
+        
 
         void ConfigureButton(RadioButton rb, INetworkCanvasStrategy s)
         {
@@ -64,6 +75,9 @@ namespace electric_network_editor.ViewModels
         {
 
             _sidebarCommands.Add(new SourceSymbolCommand());
+
+            _sidebarCommands.Add(new NodeSymbolCommand());
+
 
         }
 
