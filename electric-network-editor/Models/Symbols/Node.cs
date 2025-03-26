@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls; 
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace electric_network_editor.Models.Symbols
@@ -15,8 +16,6 @@ namespace electric_network_editor.Models.Symbols
         public override string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/circle.png";
         public override UIElement UIElement { get; }
 
-        public static new double Size = 80;
-
         public Node(Point position) : base(position)
         {
 
@@ -25,7 +24,8 @@ namespace electric_network_editor.Models.Symbols
                 Source = new BitmapImage(new Uri(ImgSrc)),
                 Width = Size,
                 Height = Size,
-                Tag = this
+                Tag = this,
+                RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
             };
         }
 

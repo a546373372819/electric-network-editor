@@ -27,9 +27,6 @@
   <ItemGroup>
     <Resource Include="Images\circle.png" />
     <Resource Include="Images\delete.png" />
-    <Resource Include="Images\rectangle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\triangle.png" />
   </ItemGroup>
 

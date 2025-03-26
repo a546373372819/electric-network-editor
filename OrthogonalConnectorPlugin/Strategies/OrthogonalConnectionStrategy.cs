@@ -19,12 +19,12 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
-namespace OrthogonalConnectorPlugin
+namespace OrthogonalConnectorPlugin.Strategies
 {
     public class OrthogonalConnectionStrategy : INetworkCanvasStrategy
     {
         private SymbolClickInfo _parentSymbolClickInfo = null;
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; }= null;
+        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
         public DelegateCommand<IFormattable> SymbolClickCommand { get; }
 
 
@@ -40,11 +40,11 @@ namespace OrthogonalConnectorPlugin
 
                 if (_parentSymbolClickInfo != null)
                 {
-                   
+
                     SymbolClickInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
 
                     Shape line = LineHelper.CreateLine(_parentSymbolClickInfo, childSymbolClickInfo);
-                    _networkCanvasElements.Add(new OrthogonalLineConnector(line,_parentSymbolClickInfo.Symbol,childSymbolClickInfo.Symbol));
+                    _networkCanvasElements.Add(new OrthogonalLineConnector(line, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol));
 
                     _parentSymbolClickInfo = null;
                 }
@@ -60,7 +60,7 @@ namespace OrthogonalConnectorPlugin
 
 
 
-        SymbolClickInfo GetClickSymbolInfo(Point mouseClickPos,object sender, Image image)
+        SymbolClickInfo GetClickSymbolInfo(Point mouseClickPos, object sender, Image image)
         {
             Symbol? symbol = image.Tag as Symbol ?? throw new Exception("Image Tag Empty");
 
@@ -75,8 +75,8 @@ namespace OrthogonalConnectorPlugin
             Point imagePosition = image.TransformToAncestor((Visual)parent).Transform(new Point(0, 0));
 
             // Calculate the center of the image
-            double centerX = imagePosition.X + (image.ActualWidth / 2);
-            double centerY = imagePosition.Y + (image.ActualHeight / 2);
+            double centerX = imagePosition.X + image.ActualWidth / 2;
+            double centerY = imagePosition.Y + image.ActualHeight / 2;
 
             return new Point(centerX, centerY);
         }

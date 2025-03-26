@@ -9,6 +9,7 @@ namespace PluginContracts.Abstract
 {
     public abstract class SymbolConnector:NetworkCanvasElement
     {
+        //ime(startend)
         public Symbol Parent { get; }
         public Symbol Child { get; }
 

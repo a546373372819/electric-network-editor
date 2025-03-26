@@ -1,4 +1,5 @@
 using OrthogonalConnectorPlugin.Helpers;
+using OrthogonalConnectorPlugin.Strategies;
 using PluginContracts.Interfaces;
 using System;
 using System.Composition;

@@ -29,8 +29,7 @@ namespace electric_network_editor.Strategies
             var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
             if (hitTestResult?.VisualHit is not Image)
             {
-                mousePos.X -= Node.Size/2;
-                mousePos.Y -= Node.Size / 2;
+
                 Node node = new Node(mousePos);
 
                 _networkCanvasElements.Add(node);

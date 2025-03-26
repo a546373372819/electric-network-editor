@@ -1,29 +1,18 @@
-﻿using electric_network_editor.Models.Symbols;
 using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
-using System.Windows.Shapes;
+using SwitchSymbolPlugin.Models;
 
-namespace electric_network_editor.Strategies
+namespace SwitchSymbolPlugin.Strategies
 {
-    internal class DeleteSymbolStrategy:INetworkCanvasStrategy
+    internal class SwitchSymbolStrategy : INetworkCanvasStrategy
     {
         public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
-        private IConnectorService _connectorService;
-
-        public DeleteSymbolStrategy(IConnectorService connectorService)
-        {
-            _connectorService = connectorService;
-        }
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -34,27 +23,19 @@ namespace electric_network_editor.Strategies
 
 
             var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
-            if (hitTestResult?.VisualHit is Image image)
+            if (hitTestResult?.VisualHit is not Image)
             {
-                Symbol? symbol = image.Tag as Symbol ?? throw new Exception("Image Tag Empty");
 
-                List<SymbolConnector> connectors= _connectorService.GetSymbolConnectors(symbol);
+                Switch node = new(mousePos);
 
-                foreach (SymbolConnector connector in connectors.ToList())
-                {
-                    _networkCanvasElements.Remove(connector);
-
-                }
-
-                _networkCanvasElements.Remove(symbol);
-
-
+                _networkCanvasElements.Add(node);
             }
 
 
 
-        }
 
+
+        }
 
 
 

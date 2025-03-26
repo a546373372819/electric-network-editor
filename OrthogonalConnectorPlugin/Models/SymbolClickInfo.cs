@@ -11,18 +11,18 @@ namespace OrthogonalConnectorPlugin.Models
     internal class SymbolClickInfo
     {
         public Point ClickPoint;
-        public Symbol Symbol;
+        public Symbol ClickedSymbol;
 
         public SymbolClickInfo(Point clickPoint, Symbol symbol)
         {
             ClickPoint = clickPoint;
-            Symbol = symbol;
+            ClickedSymbol = symbol;
 
         }
 
         public Point GetSymbolCenter()
         {
-            return new Point(Symbol.Position.X+Symbol.Size/2, Symbol.Position.Y + Symbol.Size / 2);
+            return new Point(ClickedSymbol.Position.X, ClickedSymbol.Position.Y );
         }
 
         public double GetSymbolOffset()

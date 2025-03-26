@@ -29,8 +29,7 @@ namespace electric_network_editor.Strategies
             var hitTestResult = VisualTreeHelper.HitTest((Visual)sender, mousePos);
             if (hitTestResult?.VisualHit is not Image )
             {
-                mousePos.X -= Source.Size / 2;
-                mousePos.Y -= Source.Size / 2;
+                
                 Source source = new Source(mousePos);
 
                 _networkCanvasElements.Add(source);
