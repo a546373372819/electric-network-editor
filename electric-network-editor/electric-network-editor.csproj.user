@@ -5,12 +5,18 @@
     <Compile Update="Views\CommandSidebarView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MenuBarView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\NetworkCanvasView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CommandSidebarView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MenuBarView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\NetworkCanvasView.xaml">

@@ -10,13 +10,13 @@ namespace PluginContracts.Abstract
     public abstract class SymbolConnector:NetworkCanvasElement
     {
         //ime(startend)
-        public Symbol Parent { get; }
-        public Symbol Child { get; }
+        public Symbol StartSymbol { get; }
+        public Symbol EndSymbol { get; }
 
         protected SymbolConnector(Symbol parent, Symbol child,Point position) : base(position)
         {
-            Parent = parent;
-            Child = child;
+            StartSymbol = parent;
+            EndSymbol = child;
         }
 
     }

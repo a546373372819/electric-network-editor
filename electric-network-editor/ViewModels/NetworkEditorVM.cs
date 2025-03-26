@@ -1,4 +1,5 @@
-﻿using electric_network_editor.Models.Symbols;
+﻿using electric_network_editor.Models;
+using electric_network_editor.Models.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace electric_network_editor.ViewModels
 {
     internal class NetworkEditorVM
     {
-
+        //private List<NetworkModel> _loadedNetworkModels;
+        private NetworkModel _activeNetworkModel;
 
     }
 }

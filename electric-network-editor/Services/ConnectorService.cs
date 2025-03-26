@@ -22,25 +22,25 @@ namespace electric_network_editor.Services
         {
             Connectors.Add(c);
 
-            if (!SymbolToSymbolConnectorDict.ContainsKey(c.Parent))
+            if (!SymbolToSymbolConnectorDict.ContainsKey(c.StartSymbol))
             {
-                SymbolToSymbolConnectorDict[c.Parent] = new List<SymbolConnector>();
+                SymbolToSymbolConnectorDict[c.StartSymbol] = new List<SymbolConnector>();
             }
-            SymbolToSymbolConnectorDict[c.Parent].Add(c);
+            SymbolToSymbolConnectorDict[c.StartSymbol].Add(c);
 
-            if (!SymbolToSymbolConnectorDict.ContainsKey(c.Child))
+            if (!SymbolToSymbolConnectorDict.ContainsKey(c.EndSymbol))
             {
-                SymbolToSymbolConnectorDict[c.Child] = new List<SymbolConnector>();
+                SymbolToSymbolConnectorDict[c.EndSymbol] = new List<SymbolConnector>();
             }
-            SymbolToSymbolConnectorDict[c.Child].Add(c);
+            SymbolToSymbolConnectorDict[c.EndSymbol].Add(c);
 
         }
 
         public void RemoveConnector(SymbolConnector c)
         {
             Connectors.Remove(c);
-            SymbolToSymbolConnectorDict[c.Parent]?.Remove(c);
-            SymbolToSymbolConnectorDict[c.Child]?.Remove(c);
+            SymbolToSymbolConnectorDict[c.StartSymbol]?.Remove(c);
+            SymbolToSymbolConnectorDict[c.EndSymbol]?.Remove(c);
 
         }
 
@@ -61,7 +61,7 @@ namespace electric_network_editor.Services
 
             foreach (SymbolConnector Connector in Connectors)
             {
-                Childern.Add(Connector.Parent == s ? Connector.Child : Connector.Parent);
+                Childern.Add(Connector.StartSymbol == s ? Connector.EndSymbol : Connector.StartSymbol);
             }
 
             return Childern;

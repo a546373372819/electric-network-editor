@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="electric_network_editor.Views.MenuBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:electric_network_editor.ViewModels"
+             xmlns:local="clr-namespace:electric_network_editor.Views"
+             mc:Ignorable="d"
+             Width="Auto" Height="Auto">
+
+    <UserControl.DataContext>
+        <vm:MenuBarVM />
+    </UserControl.DataContext>
+
+    <Menu>
+        <MenuItem Header="_File">
+            <MenuItem Header="_New" />
+            <MenuItem Header="_Open" />
+            <MenuItem Header="_Save" />
+        </MenuItem>
+    </Menu>
+</UserControl>
