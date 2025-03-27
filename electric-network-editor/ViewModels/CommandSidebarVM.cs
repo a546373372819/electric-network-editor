@@ -2,6 +2,7 @@
 using electric_network_editor.Models;
 using electric_network_editor.Models.SidebarCommands;
 using electric_network_editor.Services;
+using electric_network_editor.ViewModels.Interfaces;
 using PluginContracts.Interfaces;
 using Prism.Commands;
 using Prism.Events;
@@ -21,22 +22,22 @@ using System.Windows.Media.Imaging;
 
 namespace electric_network_editor.ViewModels
 {
-    public class CommandSidebarVM
+    public class CommandSidebarVM : ICommandSidebarVM
     {
         IEventAggregator _ea;
-        private List<ISidebarCommand> _sidebarCommands =new List<ISidebarCommand>();
+        private List<ISidebarCommand> _sidebarCommands = new List<ISidebarCommand>();
         public DelegateCommand<INetworkCanvasStrategy> ButtonCommand { get; }
 
         public ObservableCollection<RadioButton> CommandButtons { get; set; } = new ObservableCollection<RadioButton>();
 
-        public CommandSidebarVM()
+        public CommandSidebarVM(IEventAggregator ea)
         {
-            _ea = EventAggregatorProvider.Instance;
+            _ea = ea;
             ButtonCommand = new DelegateCommand<INetworkCanvasStrategy>(On_StrategyChanged);
             LoadPlugins();
             LoadCoreCommands();
             CreateButtons();
-     
+
         }
 
         private void CreateButtons()
@@ -57,7 +58,7 @@ namespace electric_network_editor.ViewModels
             }
         }
 
-        
+
 
         void ConfigureButton(RadioButton rb, INetworkCanvasStrategy s)
         {

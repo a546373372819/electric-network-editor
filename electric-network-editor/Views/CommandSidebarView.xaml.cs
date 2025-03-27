@@ -1,4 +1,6 @@
 ﻿using electric_network_editor.ViewModels;
+using electric_network_editor.ViewModels.Interfaces;
+using electric_network_editor.Views.Interfaces;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -20,10 +22,11 @@ namespace electric_network_editor.Views
     /// <summary>
     /// Interaction logic for CommandSidebarView.xaml
     /// </summary>
-    public partial class CommandSidebarView : UserControl
+    public partial class CommandSidebarView : UserControl, ICommandSidebarView
     {
-        public CommandSidebarView()
+        public CommandSidebarView(ICommandSidebarVM vm)
         {
+            DataContext = vm;
             InitializeComponent();
 
         }

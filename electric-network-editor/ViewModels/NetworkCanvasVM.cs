@@ -14,10 +14,11 @@ using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
 using System.Collections.Specialized;
 using electric_network_editor.Services;
+using electric_network_editor.ViewModels.Interfaces;
 
 namespace electric_network_editor.ViewModels
 {
-    public class NetworkCanvasVM
+    public class NetworkCanvasVM : INetworkCanvasVM
     {
         private IEventAggregator _ea;
         private ConnectorService ConnectorService;
@@ -25,20 +26,20 @@ namespace electric_network_editor.ViewModels
         public ObservableCollection<NetworkCanvasElement> networkCanvasElements { get; } = new ObservableCollection<NetworkCanvasElement>();
         private INetworkCanvasStrategy _currentStrategy = null;
 
-        public NetworkCanvasVM()
+        public NetworkCanvasVM(IEventAggregator ea)
         {
-            _ea = EventAggregatorProvider.Instance;
+            _ea = ea;
             ConnectorService = ConnectorService.Instance;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
             networkCanvasElements.CollectionChanged += OnNetworkCanvasElementsChanged;
-            networkCanvasElements.Add(new Source(new Point(200,200)));
+            networkCanvasElements.Add(new Source(new Point(200, 200)));
         }
 
 
 
         private void On_StrategyChanged(INetworkCanvasStrategy s)
         {
-            if(_currentStrategy != null)
+            if (_currentStrategy != null)
             {
                 _currentStrategy.Unselected(NetworkCanvas);
             }
@@ -53,7 +54,7 @@ namespace electric_network_editor.ViewModels
             {
                 foreach (var newItem in e.NewItems)
                 {
-                    if(newItem is SymbolConnector)
+                    if (newItem is SymbolConnector)
                     {
                         ConnectorService.AddConnector((SymbolConnector)newItem);
                     };

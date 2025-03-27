@@ -8,9 +8,6 @@
              mc:Ignorable="d"
              Width="Auto" Height="Auto">
 
-    <UserControl.DataContext>
-        <vm:MenuBarVM />
-    </UserControl.DataContext>
 
     <Menu>
         <MenuItem Header="_File">

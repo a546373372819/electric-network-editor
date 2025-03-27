@@ -12,16 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using electric_network_editor.ViewModels.Interfaces;
+using electric_network_editor.Views.Interfaces;
 
 namespace electric_network_editor.Views
 {
     /// <summary>
     /// Interaction logic for MenuBarView.xaml
     /// </summary>
-    public partial class MenuBarView : UserControl
+    public partial class MenuBarView : UserControl, IMenuBarView
     {
-        public MenuBarView()
+        public MenuBarView(IMenuBarVM vm)
         {
+            DataContext = vm;
             InitializeComponent();
         }
     }

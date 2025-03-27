@@ -7,9 +7,7 @@
              xmlns:local="clr-namespace:electric_network_editor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:NetworkCanvasVM />
-    </UserControl.DataContext>
+
 
         <ItemsControl x:Name="ic" ItemsSource="{Binding networkCanvasElements}">
         <ItemsControl.ItemsPanel>

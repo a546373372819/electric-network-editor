@@ -1,4 +1,5 @@
 ﻿using electric_network_editor.Services;
+using electric_network_editor.ViewModels.Interfaces;
 using Microsoft.Win32;
 using Prism.Commands;
 using System;
@@ -11,7 +12,7 @@ using Unity;
 
 namespace electric_network_editor.ViewModels
 {
-    public class MenuBarVM
+    public class MenuBarVM : IMenuBarVM
     {
         public DelegateCommand NewCommand { get; }
         public DelegateCommand OpenCommand { get; }
@@ -21,7 +22,7 @@ namespace electric_network_editor.ViewModels
 
         public MenuBarVM()
         {
-            networkModelService= NetworkModelService.Instance;
+            networkModelService = NetworkModelService.Instance;
 
             NewCommand = new DelegateCommand(NewFile);
             OpenCommand = new DelegateCommand(OpenFile);
@@ -30,7 +31,7 @@ namespace electric_network_editor.ViewModels
 
         private void NewFile()
         {
-          
+
         }
 
         private void OpenFile()
@@ -48,7 +49,7 @@ namespace electric_network_editor.ViewModels
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
-               
+
             }
         }
 

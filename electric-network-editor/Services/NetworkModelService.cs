@@ -1,4 +1,5 @@
 ﻿using electric_network_editor.Models;
+using electric_network_editor.Services.Interfaces;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace electric_network_editor.Services
 {
-    public class NetworkModelService
+    public class NetworkModelService : INetworkModelService
     {
         private static readonly NetworkModelService _networkModelService = new NetworkModelService();
         public static NetworkModelService Instance => _networkModelService;

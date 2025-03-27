@@ -11,26 +11,28 @@
         <!-- Row Definitions for Top Menu and Main Content -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Row for the Menu bar -->
+            <!-- Menu Bar -->
             <RowDefinition Height="*"/>
-            <!-- Row for the main content (sidebar + canvas) -->
+            <!-- Main Content -->
         </Grid.RowDefinitions>
 
-        <!-- Include the MenuBar UserControl at the top -->
-        <uc:MenuBarView Grid.Row="0"/>
+        <!-- Menu Bar Placeholder -->
+        <ContentControl Content="{Binding MenuBar}" Grid.Row="0"/>
 
-        <!-- Main Content Grid (Sidebar and Canvas) -->
+        <!-- Main Content Grid (Sidebar + Canvas) -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
+                <!-- Sidebar -->
                 <ColumnDefinition Width="*"/>
+                <!-- Canvas -->
             </Grid.ColumnDefinitions>
 
-            <!-- Include Sidebar UserControl -->
-            <uc:CommandSidebarView Grid.Column="0" />
+            <!-- Sidebar Placeholder -->
+            <ContentControl Content="{Binding Sidebar}" Grid.Column="0"/>
 
-            <!-- Include Canvas UserControl -->
-            <uc:NetworkCanvasView Grid.Column="1"/>
+            <!-- Canvas Placeholder -->
+            <ContentControl Content="{Binding Canvas}" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Window>

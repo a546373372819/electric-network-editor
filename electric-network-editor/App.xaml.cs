@@ -1,5 +1,11 @@
 ﻿using DryIoc;
+using electric_network_editor.Models;
+using electric_network_editor.Services;
+using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels;
+using electric_network_editor.ViewModels.Interfaces;
+using electric_network_editor.Views;
+using electric_network_editor.Views.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.DryIoc;
 using Prism.Events;
@@ -11,7 +17,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-
+using Unity;
 
 namespace electric_network_editor
 {
@@ -20,6 +26,51 @@ namespace electric_network_editor
     /// </summary>
     public partial class App : Application
     {
+        private UnityContainer container;
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            container = new UnityContainer();
+            RegisterInstances();
+            container.Resolve<NetworkEditorView>().Show();
+        }
+
+        private void RegisterInstances()
+        {
+            RegisterUtils();
+            RegisterServices();
+            RegisterViewModels();
+            RegisterViews();
+        }
+
+        private void RegisterServices()
+        {
+            container.RegisterSingleton<INetworkModelService,NetworkModelService>();
+
+        }
+
+        private void RegisterUtils()
+        {
+            container.RegisterSingleton<IEventAggregator, EventAggregator>();
+        
+        }
+
+        private void RegisterViewModels()
+        {
+            container.RegisterType<ICommandSidebarVM,CommandSidebarVM>();
+            container.RegisterType<IMenuBarVM,MenuBarVM>();
+            container.RegisterType<INetworkCanvasVM,NetworkCanvasVM>();
+            container.RegisterType<INetworkEditorVM,NetworkEditorVM>();
+
+
+        }
+
+        private void RegisterViews()
+        {
+            container.RegisterType<CommandSidebarView>();
+            container.RegisterType<NetworkCanvasView>();
+            container.RegisterType<MenuBarView>();
+
+        }
     }
 }
