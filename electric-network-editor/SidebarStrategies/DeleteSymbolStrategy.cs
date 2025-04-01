@@ -12,17 +12,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Shapes;
+using electric_network_editor.Services.Interfaces;
 
 namespace electric_network_editor.Strategies
 {
-    internal class DeleteSymbolStrategy:INetworkCanvasStrategy
+    internal class DeleteSymbolStrategy : INetworkCanvasStrategy
     {
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
-        private IConnectorService _connectorService;
+        public INetworkModelService networkModelService { get; }
 
-        public DeleteSymbolStrategy(IConnectorService connectorService)
+        private ISymbolService _symbolService;
+
+        public DeleteSymbolStrategy(INetworkModelService nms)
         {
-            _connectorService = connectorService;
+            networkModelService = nms;        
+        }
+
+        public DeleteSymbolStrategy()
+        {
         }
 
         public void Execute(object sender, MouseButtonEventArgs e)
@@ -38,15 +44,15 @@ namespace electric_network_editor.Strategies
             {
                 Symbol? symbol = image.Tag as Symbol ?? throw new Exception("Image Tag Empty");
 
-                List<SymbolConnector> connectors= _connectorService.GetSymbolConnectors(symbol);
+                List<SymbolConnector> connectors= _symbolService.GetSymbolConnectors(symbol.Id);
 
                 foreach (SymbolConnector connector in connectors.ToList())
                 {
-                    _networkCanvasElements.Remove(connector);
+                    networkModelService.RemoveConnector(connector);
 
                 }
 
-                _networkCanvasElements.Remove(symbol);
+                networkModelService.RemoveSymbol(symbol);
 
 
             }
@@ -57,16 +63,14 @@ namespace electric_network_editor.Strategies
 
 
 
-        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
+        public void Selected(ItemsControl canvas)
         {
             canvas.MouseDown += Execute;
-            _networkCanvasElements = networkCanvasElements;
         }
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-            _networkCanvasElements = null;
         }
     }
 }

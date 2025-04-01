@@ -23,10 +23,14 @@ namespace OrthogonalConnectorPlugin.Strategies
 {
     public class OrthogonalConnectionStrategy : INetworkCanvasStrategy
     {
-        private SymbolClickInfo _parentSymbolClickInfo = null;
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
-        public DelegateCommand<IFormattable> SymbolClickCommand { get; }
 
+        private SymbolClickInfo _parentSymbolClickInfo = null;
+        public DelegateCommand<IFormattable> SymbolClickCommand { get; }
+        public INetworkModelService networkModelService { get; }
+        public OrthogonalConnectionStrategy(INetworkModelService nms)
+        {
+            networkModelService = nms;
+        }
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -44,7 +48,7 @@ namespace OrthogonalConnectorPlugin.Strategies
                     SymbolClickInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
 
                     Shape line = LineHelper.CreateLine(_parentSymbolClickInfo, childSymbolClickInfo);
-                    _networkCanvasElements.Add(new OrthogonalLineConnector(line, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol));
+                    networkModelService.AddConnector(new OrthogonalLineConnector(line, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol));
 
                     _parentSymbolClickInfo = null;
                 }
@@ -81,18 +85,14 @@ namespace OrthogonalConnectorPlugin.Strategies
             return new Point(centerX, centerY);
         }
 
-        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
+        public void Selected(ItemsControl canvas)
         {
-            _networkCanvasElements = networkCanvasElements;
-
             canvas.MouseDown += Execute;
         }
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-
-            _networkCanvasElements = null;
         }
     }
 }

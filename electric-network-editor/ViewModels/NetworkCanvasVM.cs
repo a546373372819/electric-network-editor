@@ -15,21 +15,24 @@ using PluginContracts.Interfaces;
 using System.Collections.Specialized;
 using electric_network_editor.Services;
 using electric_network_editor.ViewModels.Interfaces;
+using electric_network_editor.Services.Interfaces;
 
 namespace electric_network_editor.ViewModels
 {
     public class NetworkCanvasVM : INetworkCanvasVM
     {
         private IEventAggregator _ea;
-        private ConnectorService ConnectorService;
         public ItemsControl NetworkCanvas { get; set; }
         public ObservableCollection<NetworkCanvasElement> networkCanvasElements { get; } = new ObservableCollection<NetworkCanvasElement>();
         private INetworkCanvasStrategy _currentStrategy = null;
+        private ISymbolService _symbolService;
+        private ISymbolConnectorService _symbolConnectorService;
 
-        public NetworkCanvasVM(IEventAggregator ea)
+        public NetworkCanvasVM(IEventAggregator ea,ISymbolService ss, ISymbolConnectorService scs)
         {
             _ea = ea;
-            ConnectorService = ConnectorService.Instance;
+            _symbolService = ss;
+            _symbolConnectorService = scs;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
             networkCanvasElements.CollectionChanged += OnNetworkCanvasElementsChanged;
             networkCanvasElements.Add(new Source(new Point(200, 200)));
@@ -44,7 +47,7 @@ namespace electric_network_editor.ViewModels
                 _currentStrategy.Unselected(NetworkCanvas);
             }
 
-            s.Selected(NetworkCanvas, networkCanvasElements);
+            s.Selected(NetworkCanvas);
             _currentStrategy = s;
         }
 
@@ -56,8 +59,8 @@ namespace electric_network_editor.ViewModels
                 {
                     if (newItem is SymbolConnector)
                     {
-                        ConnectorService.AddConnector((SymbolConnector)newItem);
-                    };
+/*                       
+*/                    };
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -66,8 +69,8 @@ namespace electric_network_editor.ViewModels
                 {
                     if (oldItem is SymbolConnector)
                     {
-                        ConnectorService.RemoveConnector((SymbolConnector)oldItem);
-                    };
+/*                        ConnectorService.RemoveConnector((SymbolConnector)oldItem);
+*/                    };
                 }
             }
         }

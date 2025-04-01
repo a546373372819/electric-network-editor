@@ -12,7 +12,15 @@ namespace SwitchSymbolPlugin.Strategies
 {
     internal class SwitchSymbolStrategy : INetworkCanvasStrategy
     {
+
         public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
+
+        public INetworkModelService networkModelService { get; }
+
+        public SwitchSymbolStrategy(INetworkModelService nms)
+        {
+            networkModelService = nms;
+        }
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -39,16 +47,15 @@ namespace SwitchSymbolPlugin.Strategies
 
 
 
-        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
+        public void Selected(ItemsControl canvas)
         {
             canvas.MouseDown += Execute;
-            _networkCanvasElements = networkCanvasElements;
         }
+
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-            _networkCanvasElements = null;
         }
     }
 }

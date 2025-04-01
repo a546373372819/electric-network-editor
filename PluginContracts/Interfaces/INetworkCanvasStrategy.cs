@@ -7,8 +7,8 @@ namespace PluginContracts.Interfaces
 {
     public interface INetworkCanvasStrategy
     {
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; }
-        void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkElements);
+        public INetworkModelService networkModelService { get; }
+        void Selected(ItemsControl canvas);
         void Unselected(ItemsControl canvas);
 
     }

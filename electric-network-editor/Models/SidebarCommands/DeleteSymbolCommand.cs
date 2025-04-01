@@ -1,4 +1,5 @@
-﻿using electric_network_editor.Strategies;
+﻿using electric_network_editor.Services.Interfaces;
+using electric_network_editor.Strategies;
 using PluginContracts.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace electric_network_editor.Models.SidebarCommands
 
         public INetworkCanvasStrategy CanvasStrategy { get; }
 
-        public DeleteSymbolCommand(IConnectorService cs)
+        public DeleteSymbolCommand(INetworkModelService nms)
         {
-            CanvasStrategy = new DeleteSymbolStrategy(cs);
+            CanvasStrategy = new DeleteSymbolStrategy(nms) ;
         }
     }
 }

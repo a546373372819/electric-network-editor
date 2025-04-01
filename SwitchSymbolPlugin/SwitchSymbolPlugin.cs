@@ -14,7 +14,14 @@ namespace SwitchSymbolPlugin
     internal class SwitchSymbolPlugin : ISidebarCommand
     {
         public string ImgSrc => "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
+        public INetworkCanvasStrategy CanvasStrategy { get; }
 
-        public INetworkCanvasStrategy CanvasStrategy => new SwitchSymbolStrategy();
+        [ImportingConstructor]
+        public SwitchSymbolPlugin(INetworkModelService nms)
+        {
+            CanvasStrategy = new SwitchSymbolStrategy(nms);
+        }
+
+
     }
 }

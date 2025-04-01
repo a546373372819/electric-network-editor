@@ -12,9 +12,14 @@ namespace electric_network_editor.Models.SidebarCommands
 {
     public class NodeSymbolCommand : ISidebarCommand
     {
+        public NodeSymbolCommand(INetworkModelService nms)
+        {
+            CanvasStrategy = new NodeSymbolStrategy(nms) ;
+        }
+
         public string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/circle.png";
 
-        public INetworkCanvasStrategy CanvasStrategy => new NodeSymbolStrategy();
+        public INetworkCanvasStrategy CanvasStrategy { get; }
 
 
     }

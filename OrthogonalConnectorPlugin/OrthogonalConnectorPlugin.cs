@@ -16,7 +16,15 @@ namespace OrthogonalConnectorPlugin
     {
         public string ImgSrc => "pack://application:,,,/OrthogonalConnectorPlugin;component/Icons/connect.png";
 
-        public INetworkCanvasStrategy CanvasStrategy => new OrthogonalConnectionStrategy();
+        public INetworkCanvasStrategy CanvasStrategy { get; }
+
+        [ImportingConstructor]
+        public OrthogonalConnectorPlugin(INetworkModelService nms)
+        {
+            CanvasStrategy = new OrthogonalConnectionStrategy(nms);
+        }
+
+       
 
 
 

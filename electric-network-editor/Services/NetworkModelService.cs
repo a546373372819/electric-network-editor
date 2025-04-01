@@ -1,5 +1,7 @@
 ﻿using electric_network_editor.Models;
 using electric_network_editor.Services.Interfaces;
+using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -11,22 +13,22 @@ namespace electric_network_editor.Services
 {
     public class NetworkModelService : INetworkModelService
     {
-        private static readonly NetworkModelService _networkModelService = new NetworkModelService();
-        public static NetworkModelService Instance => _networkModelService;
 
-        private List<NetworkModel> _networkModels;
-        private NetworkModel _activeNetworkModel;
+        private Dictionary<int,NetworkModel> _networkModelIdDictionary;
+        private int _activeNetworkModelId;
+        private ISymbolService _symbolService;
+        private ISymbolConnectorService _symbolConnectorService;
 
-        public NetworkModelService()
+        public NetworkModelService(ISymbolConnectorService scs, ISymbolService ss)
         {
-            _networkModels = new List<NetworkModel>();
+            _symbolConnectorService = scs;
+            _symbolService = ss;
         }
 
         public void LoadNetworkModel(string filePath)
         {
             // Logic to load the network model from a file and add it to the list
             var networkModel = new NetworkModel(); // Populate this with actual data from the file
-            _networkModels.Add(networkModel);
         }
 
         public void SetActiveNetworkModel(string modelName)
@@ -35,12 +37,27 @@ namespace electric_network_editor.Services
 
         public NetworkModel GetActiveNetworkModel()
         {
-            return _activeNetworkModel;
+            return _networkModelIdDictionary[_activeNetworkModelId];
         }
 
-        public List<NetworkModel> GetAllNetworkModels()
+        public void AddSymbol(Symbol Symbol)
         {
-            return _networkModels;
+            throw new NotImplementedException();
+        }
+
+        public void AddConnector(SymbolConnector SymbolConnector)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSymbol(Symbol Symbol)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveConnector(SymbolConnector SymbolConnector)
+        {
+            throw new NotImplementedException();
         }
     }
 }

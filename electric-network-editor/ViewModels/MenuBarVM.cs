@@ -1,6 +1,8 @@
 ﻿using electric_network_editor.Services;
+using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels.Interfaces;
 using Microsoft.Win32;
+using PluginContracts.Interfaces;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,11 @@ namespace electric_network_editor.ViewModels
         public DelegateCommand OpenCommand { get; }
         public DelegateCommand SaveCommand { get; }
 
-        readonly NetworkModelService networkModelService;
+        readonly INetworkModelService networkModelService;
 
-        public MenuBarVM()
+        public MenuBarVM(INetworkModelService nms)
         {
-            networkModelService = NetworkModelService.Instance;
-
+            networkModelService = nms;
             NewCommand = new DelegateCommand(NewFile);
             OpenCommand = new DelegateCommand(OpenFile);
             SaveCommand = new DelegateCommand(SaveFile);
@@ -36,7 +37,7 @@ namespace electric_network_editor.ViewModels
 
         private void OpenFile()
         {
-            var openFileDialog = new OpenFileDialog { Filter = "XML Files|*.xml|" };
+            var openFileDialog = new OpenFileDialog { Filter = "XML Files|*.xml" };
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
@@ -45,7 +46,7 @@ namespace electric_network_editor.ViewModels
 
         private void SaveFile()
         {
-            var saveFileDialog = new SaveFileDialog { Filter = "XML Files|*.xml|JSON Files|*.json" };
+            var saveFileDialog = new SaveFileDialog { Filter = "XML Files|*.xml" };
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;

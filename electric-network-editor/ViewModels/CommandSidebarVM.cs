@@ -2,6 +2,7 @@
 using electric_network_editor.Models;
 using electric_network_editor.Models.SidebarCommands;
 using electric_network_editor.Services;
+using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels.Interfaces;
 using PluginContracts.Interfaces;
 using Prism.Commands;
@@ -25,14 +26,15 @@ namespace electric_network_editor.ViewModels
     public class CommandSidebarVM : ICommandSidebarVM
     {
         IEventAggregator _ea;
+
         private List<ISidebarCommand> _sidebarCommands = new List<ISidebarCommand>();
         public DelegateCommand<INetworkCanvasStrategy> ButtonCommand { get; }
-
         public ObservableCollection<RadioButton> CommandButtons { get; set; } = new ObservableCollection<RadioButton>();
-
-        public CommandSidebarVM(IEventAggregator ea)
+        INetworkModelService networkModelService;
+        public CommandSidebarVM(IEventAggregator ea, INetworkModelService nms)
         {
             _ea = ea;
+            networkModelService = nms;
             ButtonCommand = new DelegateCommand<INetworkCanvasStrategy>(On_StrategyChanged);
             LoadPlugins();
             LoadCoreCommands();
@@ -76,11 +78,11 @@ namespace electric_network_editor.ViewModels
         private void LoadCoreCommands()
         {
 
-            _sidebarCommands.Add(new SourceSymbolCommand());
+            _sidebarCommands.Add(new SourceSymbolCommand(networkModelService));
 
-            _sidebarCommands.Add(new NodeSymbolCommand());
+            _sidebarCommands.Add(new NodeSymbolCommand(networkModelService));
 
-            _sidebarCommands.Add(new DeleteSymbolCommand(ConnectorService.Instance));
+            _sidebarCommands.Add(new DeleteSymbolCommand(networkModelService));
 
 
         }
@@ -98,7 +100,8 @@ namespace electric_network_editor.ViewModels
                                                 .ToList();
 
                 var configuration = new ContainerConfiguration()
-                    .WithAssemblies(pluginAssemblies);
+                .WithAssemblies(pluginAssemblies)  // Load plugin assemblies
+                .WithExport<INetworkModelService>(networkModelService);  // Register services to inject
 
                 using (var container = configuration.CreateContainer())
                 {

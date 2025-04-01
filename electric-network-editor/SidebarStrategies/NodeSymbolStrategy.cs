@@ -16,7 +16,14 @@ namespace electric_network_editor.Strategies
 {
     internal class NodeSymbolStrategy:INetworkCanvasStrategy
     {
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
+        public NodeSymbolStrategy(INetworkModelService nms)
+        {
+            networkModelService = nms;
+        }
+
+        private INetworkModelService networkModelService { get;}
+
+        INetworkModelService INetworkCanvasStrategy.networkModelService => throw new NotImplementedException();
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -32,7 +39,7 @@ namespace electric_network_editor.Strategies
 
                 Node node = new Node(mousePos);
 
-                _networkCanvasElements.Add(node);
+                networkModelService.AddSymbol(node);
             }
 
 
@@ -43,16 +50,14 @@ namespace electric_network_editor.Strategies
 
 
 
-        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
+        public void Selected(ItemsControl canvas)
         {
             canvas.MouseDown += Execute;
-            _networkCanvasElements = networkCanvasElements;
         }
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-            _networkCanvasElements = null;
         }
     }
 }

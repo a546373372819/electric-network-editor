@@ -9,7 +9,7 @@ namespace PluginContracts.Abstract
 {
     public abstract class NetworkCanvasElement
     {
-        private int Id {get;}
+        public int Id {get;}
         public abstract UIElement UIElement { get; }
         public Point Position { get; }
 

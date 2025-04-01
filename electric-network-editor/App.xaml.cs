@@ -7,6 +7,7 @@ using electric_network_editor.ViewModels.Interfaces;
 using electric_network_editor.Views;
 using electric_network_editor.Views.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using PluginContracts.Interfaces;
 using Prism.DryIoc;
 using Prism.Events;
 using Prism.Ioc;
@@ -46,6 +47,9 @@ namespace electric_network_editor
         private void RegisterServices()
         {
             container.RegisterSingleton<INetworkModelService,NetworkModelService>();
+            container.RegisterSingleton<ISymbolService, SymbolService>();
+            container.RegisterSingleton<ISymbolConnectorService, SymbolConnectorService>();
+
 
         }
 

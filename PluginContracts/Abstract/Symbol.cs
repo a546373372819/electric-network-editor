@@ -16,7 +16,7 @@ namespace PluginContracts.Abstract
     {
 
 
-        //TODO mora biti slika??
+        public List<int> ConnectorsIds { get; set; }
         public abstract string ImgSrc { get; }
 
         public static double Size = 100;

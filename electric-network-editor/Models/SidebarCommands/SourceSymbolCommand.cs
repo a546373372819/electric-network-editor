@@ -12,9 +12,14 @@ namespace electric_network_editor.Models.SidebarCommands
 {
     public class SourceSymbolCommand : ISidebarCommand
     {
+        public SourceSymbolCommand(INetworkModelService nms)
+        {
+            CanvasStrategy = new SourceSymbolStrategy(nms);
+        }
+
         public string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/triangle.png";
 
-        public INetworkCanvasStrategy CanvasStrategy => new SourceSymbolStrategy();
+        public INetworkCanvasStrategy CanvasStrategy { get; }
 
 
     }

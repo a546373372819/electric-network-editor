@@ -14,9 +14,12 @@ namespace electric_network_editor.Strategies
 {
     public class SourceSymbolStrategy : INetworkCanvasStrategy
     {
-        
+        public SourceSymbolStrategy(INetworkModelService nms)
+        {
+            networkModelService = nms;
+        }
 
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
+        public INetworkModelService networkModelService {get;}
 
         public void Execute(object sender, MouseButtonEventArgs e)
         {
@@ -32,7 +35,7 @@ namespace electric_network_editor.Strategies
                 
                 Source source = new Source(mousePos);
 
-                _networkCanvasElements.Add(source);
+                networkModelService.AddSymbol(source);
             }
 
 
@@ -42,16 +45,15 @@ namespace electric_network_editor.Strategies
 
 
 
-        public void Selected(ItemsControl canvas, ObservableCollection<NetworkCanvasElement> networkCanvasElements)
+        public void Selected(ItemsControl canvas)
         {
             canvas.MouseDown += Execute;
-            _networkCanvasElements = networkCanvasElements;
         }
+
 
         public void Unselected(ItemsControl canvas)
         {
             canvas.MouseDown -= Execute;
-            _networkCanvasElements = null;
         }
     }
 }
