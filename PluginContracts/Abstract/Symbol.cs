@@ -16,7 +16,7 @@ namespace PluginContracts.Abstract
     {
 
 
-        public List<int> ConnectorsIds { get; set; }
+        public List<long> ConnectorsIds { get; set; } = new List<long>();
         public abstract string ImgSrc { get; }
 
         public static double Size = 100;

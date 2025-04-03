@@ -1,10 +1,12 @@
-﻿using electric_network_editor.Models;
+﻿using electric_network_editor.Events;
+using electric_network_editor.Models;
 using electric_network_editor.Services.Interfaces;
 using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +15,11 @@ namespace electric_network_editor.Services
 {
     public class NetworkModelService : INetworkModelService
     {
+        public ObservableCollection<NetworkCanvasElement> ActiveNetworkCanvasElements { get; set; } = new ObservableCollection<NetworkCanvasElement>();
 
-        private Dictionary<int,NetworkModel> _networkModelIdDictionary;
-        private int _activeNetworkModelId;
+        private Dictionary<long,NetworkModel> _networkModelIdDictionary= new Dictionary<long, NetworkModel>();
+        private long _activeNetworkModelId { get; set; }
+
         private ISymbolService _symbolService;
         private ISymbolConnectorService _symbolConnectorService;
 
@@ -25,14 +29,18 @@ namespace electric_network_editor.Services
             _symbolService = ss;
         }
 
-        public void LoadNetworkModel(string filePath)
+        void SetActiveNetworkModel(long Id)
         {
-            // Logic to load the network model from a file and add it to the list
-            var networkModel = new NetworkModel(); // Populate this with actual data from the file
+            _activeNetworkModelId = Id;
+            ActiveNetworkCanvasElements.Clear();
+            ActiveNetworkCanvasElements.AddRange(_networkModelIdDictionary[Id].NetworkModelElements);
         }
 
-        public void SetActiveNetworkModel(string modelName)
+        public void CreateNetworkModel(string name)
         {
+            NetworkModel nm = new NetworkModel(name, new List<NetworkCanvasElement>());
+            _networkModelIdDictionary[nm.Id] = nm;
+            SetActiveNetworkModel(nm.Id);
         }
 
         public NetworkModel GetActiveNetworkModel()
@@ -42,22 +50,39 @@ namespace electric_network_editor.Services
 
         public void AddSymbol(Symbol Symbol)
         {
-            throw new NotImplementedException();
+            ActiveNetworkCanvasElements.Add(Symbol);
+            _symbolService.AddSymbol(Symbol);
         }
 
         public void AddConnector(SymbolConnector SymbolConnector)
         {
-            throw new NotImplementedException();
+            ActiveNetworkCanvasElements.Add(SymbolConnector);
+            _symbolConnectorService.AddSymbolConnector(SymbolConnector);
         }
 
         public void RemoveSymbol(Symbol Symbol)
         {
-            throw new NotImplementedException();
+            ActiveNetworkCanvasElements.Remove(Symbol);
+            _symbolService.RemoveSymbol(Symbol);
+        }
+        public void RemoveSymbol(long id)
+        {
+            Symbol symbol = _symbolService.GetSymbol(id);
+            RemoveSymbol(symbol);
         }
 
         public void RemoveConnector(SymbolConnector SymbolConnector)
         {
-            throw new NotImplementedException();
+            _symbolService.RemoveConnectorFromSymbols(SymbolConnector);
+
+            ActiveNetworkCanvasElements.Remove(SymbolConnector);
+            _symbolConnectorService.RemoveSymbolConnector(SymbolConnector);
+        }
+
+        public void RemoveConnector(long id)
+        {
+            SymbolConnector symbolConnector = _symbolConnectorService.GetSymbolConnector(id);
+            RemoveConnector(symbolConnector);
         }
     }
 }

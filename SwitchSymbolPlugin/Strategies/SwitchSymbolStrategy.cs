@@ -13,7 +13,6 @@ namespace SwitchSymbolPlugin.Strategies
     internal class SwitchSymbolStrategy : INetworkCanvasStrategy
     {
 
-        public ObservableCollection<NetworkCanvasElement> _networkCanvasElements { get; set; } = null;
 
         public INetworkModelService networkModelService { get; }
 
@@ -36,7 +35,7 @@ namespace SwitchSymbolPlugin.Strategies
 
                 Switch node = new(mousePos);
 
-                _networkCanvasElements.Add(node);
+                networkModelService.AddSymbol(node);
             }
 
 

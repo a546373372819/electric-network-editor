@@ -23,21 +23,17 @@ namespace electric_network_editor.ViewModels
     {
         private IEventAggregator _ea;
         public ItemsControl NetworkCanvas { get; set; }
-        public ObservableCollection<NetworkCanvasElement> networkCanvasElements { get; } = new ObservableCollection<NetworkCanvasElement>();
+        public ObservableCollection<NetworkCanvasElement> networkCanvasElements { get; set; }
         private INetworkCanvasStrategy _currentStrategy = null;
-        private ISymbolService _symbolService;
-        private ISymbolConnectorService _symbolConnectorService;
 
-        public NetworkCanvasVM(IEventAggregator ea,ISymbolService ss, ISymbolConnectorService scs)
+
+        public NetworkCanvasVM(IEventAggregator ea,INetworkModelService nms)
         {
             _ea = ea;
-            _symbolService = ss;
-            _symbolConnectorService = scs;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
-            networkCanvasElements.CollectionChanged += OnNetworkCanvasElementsChanged;
-            networkCanvasElements.Add(new Source(new Point(200, 200)));
-        }
+            networkCanvasElements = nms.ActiveNetworkCanvasElements;
 
+        }
 
 
         private void On_StrategyChanged(INetworkCanvasStrategy s)
@@ -51,29 +47,7 @@ namespace electric_network_editor.ViewModels
             _currentStrategy = s;
         }
 
-        private void OnNetworkCanvasElementsChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (var newItem in e.NewItems)
-                {
-                    if (newItem is SymbolConnector)
-                    {
-/*                       
-*/                    };
-                }
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (var oldItem in e.OldItems)
-                {
-                    if (oldItem is SymbolConnector)
-                    {
-/*                        ConnectorService.RemoveConnector((SymbolConnector)oldItem);
-*/                    };
-                }
-            }
-        }
+       
 
 
     }

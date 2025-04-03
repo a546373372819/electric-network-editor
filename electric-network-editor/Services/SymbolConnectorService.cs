@@ -10,11 +10,21 @@ namespace electric_network_editor.Services
 {
     public class SymbolConnectorService : ISymbolConnectorService
     {
-        Dictionary<int, SymbolConnector> SymbolConnectorIdDictionary = new Dictionary<int, SymbolConnector>();
+        Dictionary<long, SymbolConnector> SymbolConnectorIdDictionary = new Dictionary<long, SymbolConnector>();
 
-        public SymbolConnector GetSymbolConnector(int id)
+        public void AddSymbolConnector(SymbolConnector connector)
+        {
+            SymbolConnectorIdDictionary.Add(connector.Id,connector);
+        }
+
+        public SymbolConnector GetSymbolConnector(long id)
         {
             return SymbolConnectorIdDictionary[id];
+        }
+
+        public void RemoveSymbolConnector(SymbolConnector connector)
+        {
+            SymbolConnectorIdDictionary.Remove(connector.Id);
         }
     }
 }

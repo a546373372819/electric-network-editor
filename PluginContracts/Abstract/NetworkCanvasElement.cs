@@ -9,13 +9,13 @@ namespace PluginContracts.Abstract
 {
     public abstract class NetworkCanvasElement
     {
-        public int Id {get;}
+        public long Id {get;}
         public abstract UIElement UIElement { get; }
         public Point Position { get; }
 
         protected NetworkCanvasElement(Point position)
         {
-            Id = DateTime.Now.Second;
+            Id = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             Position = position;
 
         }

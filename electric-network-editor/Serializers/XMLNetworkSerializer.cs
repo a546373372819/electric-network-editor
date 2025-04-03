@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace electric_network_editor.Serializers
 {
-    internal class XMLSerializer : INetworkElementsSerializer
+    internal class XMLNetworkSerializer : INetworkSerializer
     {
         public string SerializeNetworkElements(IEnumerable<NetworkCanvasElement> elements)
         {

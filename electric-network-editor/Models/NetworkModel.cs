@@ -10,8 +10,15 @@ namespace electric_network_editor.Models
 {
     public class NetworkModel
     {
-        int Id { get; }
+        public NetworkModel(string name, List<NetworkCanvasElement> networkModelElements)
+        {
+            Id = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            Name = name;
+            NetworkModelElements = networkModelElements;
+        }
+
+        public long Id { get; }
         String Name { get; }
-        List<NetworkCanvasElement> NetworkModelElements { get; }
+        public List<NetworkCanvasElement> NetworkModelElements { get; }
     }
 }

@@ -20,7 +20,6 @@ namespace electric_network_editor.Strategies
     {
         public INetworkModelService networkModelService { get; }
 
-        private ISymbolService _symbolService;
 
         public DeleteSymbolStrategy(INetworkModelService nms)
         {
@@ -44,11 +43,10 @@ namespace electric_network_editor.Strategies
             {
                 Symbol? symbol = image.Tag as Symbol ?? throw new Exception("Image Tag Empty");
 
-                List<SymbolConnector> connectors= _symbolService.GetSymbolConnectors(symbol.Id);
 
-                foreach (SymbolConnector connector in connectors.ToList())
+                foreach (long connectorId in symbol.ConnectorsIds.ToList())
                 {
-                    networkModelService.RemoveConnector(connector);
+                    networkModelService.RemoveConnector(connectorId);
 
                 }
 

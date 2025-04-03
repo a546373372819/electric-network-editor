@@ -34,6 +34,9 @@ namespace electric_network_editor
             container = new UnityContainer();
             RegisterInstances();
             container.Resolve<NetworkEditorView>().Show();
+
+            INetworkModelService nms = container.Resolve<INetworkModelService>();
+            nms.CreateNetworkModel("");
         }
 
         private void RegisterInstances()
@@ -46,6 +49,7 @@ namespace electric_network_editor
 
         private void RegisterServices()
         {
+
             container.RegisterSingleton<INetworkModelService,NetworkModelService>();
             container.RegisterSingleton<ISymbolService, SymbolService>();
             container.RegisterSingleton<ISymbolConnectorService, SymbolConnectorService>();
