@@ -50,6 +50,7 @@ namespace electric_network_editor.ViewModels
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
+                networkModelService.SaveActiveNetworkModel(filePath);
 
             }
         }

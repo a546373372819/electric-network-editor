@@ -62,8 +62,6 @@ namespace electric_network_editor.Services
         {
             ActiveNetworkCanvasElements.Add(kymbol);
             _symbolService.AddSymbol(kymbol);
-            GetActiveNetworkModel().NetworkModelElements.Add(kymbol);
-            _networkSerializer.Serialize(GetActiveNetworkModel(),"blabla.xml");
            
         }
 
@@ -74,8 +72,7 @@ namespace electric_network_editor.Services
         {
             ActiveNetworkCanvasElements.Add(SymbolConnector);
             _symbolConnectorService.AddSymbolConnector(SymbolConnector);
-            GetActiveNetworkModel().NetworkModelElements.Add(SymbolConnector);
-            _networkSerializer.Serialize(GetActiveNetworkModel(), "blabla.xml");
+
 
         }
 
@@ -102,6 +99,13 @@ namespace electric_network_editor.Services
         {
             SymbolConnector symbolConnector = _symbolConnectorService.GetSymbolConnector(id);
             RemoveConnector(symbolConnector);
+        }
+
+        public void SaveActiveNetworkModel(string f)
+        {
+            GetActiveNetworkModel().NetworkModelElements.Clear();
+            GetActiveNetworkModel().NetworkModelElements.AddRange(ActiveNetworkCanvasElements);
+            _networkSerializer.Serialize(GetActiveNetworkModel(), f);
         }
     }
 }

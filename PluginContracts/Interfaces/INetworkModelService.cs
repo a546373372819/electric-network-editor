@@ -12,10 +12,10 @@ namespace PluginContracts.Interfaces
         void AddSymbol(Symbol Symbol);
         void RemoveSymbol(Symbol Symbol);
         void RemoveSymbol(long id);
-
         void AddConnector(SymbolConnector SymbolConnector);
         void RemoveConnector(SymbolConnector SymbolConnector);
         void RemoveConnector(long id);
+        void SaveActiveNetworkModel(string filePath);
 
     }
 }
