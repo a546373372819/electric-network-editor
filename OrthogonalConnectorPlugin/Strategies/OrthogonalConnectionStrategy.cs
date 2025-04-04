@@ -47,9 +47,9 @@ namespace OrthogonalConnectorPlugin.Strategies
 
                     SymbolClickInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
 
-                    Shape line = LineHelper.CreateLine(_parentSymbolClickInfo, childSymbolClickInfo);
+                    List<Point> LinePoints = LineHelper.GetLinePoints(_parentSymbolClickInfo, childSymbolClickInfo);
 
-                    SymbolConnector sc = new OrthogonalLineConnector(line, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol);
+                    SymbolConnector sc = new OrthogonalLineConnector(LinePoints, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol);
 
                     networkModelService.AddConnector(sc);
 

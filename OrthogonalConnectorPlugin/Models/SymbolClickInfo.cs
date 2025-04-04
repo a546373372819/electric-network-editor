@@ -22,7 +22,7 @@ namespace OrthogonalConnectorPlugin.Models
 
         public Point GetSymbolCenter()
         {
-            return new Point(ClickedSymbol.Position.X, ClickedSymbol.Position.Y );
+            return new Point(ClickedSymbol.X, ClickedSymbol.Y );
         }
 
         public double GetSymbolOffset()

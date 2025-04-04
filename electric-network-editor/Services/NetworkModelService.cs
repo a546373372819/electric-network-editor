@@ -7,9 +7,16 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Reflection.Metadata;
+using PluginContracts.Serialization;
+using System.Collections;
 
 namespace electric_network_editor.Services
 {
@@ -22,11 +29,14 @@ namespace electric_network_editor.Services
 
         private ISymbolService _symbolService;
         private ISymbolConnectorService _symbolConnectorService;
+        private INetworkSerializer _networkSerializer;
 
-        public NetworkModelService(ISymbolConnectorService scs, ISymbolService ss)
+
+        public NetworkModelService(ISymbolConnectorService scs, ISymbolService ss, INetworkSerializer serializer)
         {
             _symbolConnectorService = scs;
             _symbolService = ss;
+            _networkSerializer = serializer;
         }
 
         void SetActiveNetworkModel(long Id)
@@ -48,16 +58,25 @@ namespace electric_network_editor.Services
             return _networkModelIdDictionary[_activeNetworkModelId];
         }
 
-        public void AddSymbol(Symbol Symbol)
+        public void AddSymbol(Symbol kymbol)
         {
-            ActiveNetworkCanvasElements.Add(Symbol);
-            _symbolService.AddSymbol(Symbol);
+            ActiveNetworkCanvasElements.Add(kymbol);
+            _symbolService.AddSymbol(kymbol);
+            GetActiveNetworkModel().NetworkModelElements.Add(kymbol);
+            _networkSerializer.Serialize(GetActiveNetworkModel(),"blabla.xml");
+           
         }
+
+
+    
 
         public void AddConnector(SymbolConnector SymbolConnector)
         {
             ActiveNetworkCanvasElements.Add(SymbolConnector);
             _symbolConnectorService.AddSymbolConnector(SymbolConnector);
+            GetActiveNetworkModel().NetworkModelElements.Add(SymbolConnector);
+            _networkSerializer.Serialize(GetActiveNetworkModel(), "blabla.xml");
+
         }
 
         public void RemoveSymbol(Symbol Symbol)

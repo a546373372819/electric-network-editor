@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using electric_network_editor.Models;
+using electric_network_editor.Serializers;
 using electric_network_editor.Services;
 using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels;
@@ -8,6 +9,7 @@ using electric_network_editor.Views;
 using electric_network_editor.Views.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using PluginContracts.Interfaces;
+using PluginContracts.Serialization;
 using Prism.DryIoc;
 using Prism.Events;
 using Prism.Ioc;
@@ -60,7 +62,8 @@ namespace electric_network_editor
         private void RegisterUtils()
         {
             container.RegisterSingleton<IEventAggregator, EventAggregator>();
-        
+            container.RegisterSingleton<INetworkSerializer, XMLNetworkSerializer>();
+
         }
 
         private void RegisterViewModels()

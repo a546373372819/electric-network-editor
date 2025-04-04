@@ -1,4 +1,5 @@
 ﻿using PluginContracts.Abstract;
+using PluginContracts.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,21 @@ namespace electric_network_editor.Models.Symbols
     public class Node : Symbol
     {
         public override string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/circle.png";
-        public override UIElement UIElement { get; }
+        public override UIElement UIElement { get; set; }
 
         public Node(Point position) : base(position)
         {
+            SetupUIElement();
 
+        }
+
+        public Node() : base()
+        {
+
+        }
+
+        public override void SetupUIElement()
+        {
             UIElement = new Image
             {
                 Source = new BitmapImage(new Uri(ImgSrc)),
@@ -28,7 +39,5 @@ namespace electric_network_editor.Models.Symbols
                 RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
             };
         }
-
-
     }
 }

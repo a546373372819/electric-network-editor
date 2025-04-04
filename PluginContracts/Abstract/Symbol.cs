@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginContracts.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,10 @@ namespace PluginContracts.Abstract
     public abstract class Symbol : NetworkCanvasElement
     {
 
-
+        [SerializationAttribute]
         public List<long> ConnectorsIds { get; set; } = new List<long>();
+
+        [SerializationAttribute]
         public abstract string ImgSrc { get; }
 
         public static double Size = 100;
@@ -24,6 +27,11 @@ namespace PluginContracts.Abstract
         protected Symbol(Point position) : base(position)
         {
         }
+
+        protected Symbol() : base()
+        {
+        }
+
 
 
 

@@ -14,7 +14,7 @@ namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static Shape CreateLine( SymbolClickInfo parent, SymbolClickInfo child)
+        public static List<Point> GetLinePoints( SymbolClickInfo parent, SymbolClickInfo child)
         {
 
             double x1 = parent.GetSymbolCenter().X;
@@ -26,17 +26,17 @@ namespace OrthogonalConnectorPlugin.Helpers
             if (Math.Abs(x2 - x1) > 50 & Math.Abs(y2 - y1) > 50)
             {
 
-                 return GetPolyline(parent, child);
+                 return GetPolylinePoints(parent, child);
             }
             else
             {
-                return GetSingleLine(parent, child);
+                return GetSingleLinePoints(parent, child);
 
             }
 
         }
 
-        private static Line GetSingleLine(SymbolClickInfo parent, SymbolClickInfo child)
+        private static List<Point> GetSingleLinePoints(SymbolClickInfo parent, SymbolClickInfo child)
         {
 
             double x1 = parent.GetSymbolCenter().X;
@@ -77,22 +77,20 @@ namespace OrthogonalConnectorPlugin.Helpers
             }
 
 
-            Line connectionLine = new()
+
+
+            List<Point> list = new()
             {
-                X1 = x1,
-                Y1 = y1,
 
-                X2 = x2,
-                Y2 = y2,
+                new Point(x1, y1),
+                new Point(x2, y2)
 
-                Stroke = Brushes.Black,
-                StrokeThickness = 5
             };
 
-            return connectionLine;
+            return list;
         }
 
-        public static Polyline GetPolyline(SymbolClickInfo parent, SymbolClickInfo child)
+        public static List<Point> GetPolylinePoints(SymbolClickInfo parent, SymbolClickInfo child)
         {
             double x1 = parent.GetSymbolCenter().X;
             double y1 = parent.GetSymbolCenter().Y;
@@ -122,19 +120,16 @@ namespace OrthogonalConnectorPlugin.Helpers
             y2 = child.ClickPoint.Y;
             x1=parent.ClickPoint.X;
 
-            Polyline polyline = new()
+            List<Point> list = new()
             {
-                Stroke = Brushes.Black,
-                StrokeThickness = 5,
-                Points = new PointCollection
-                {
-                    new Point(x1, y1),
-                    new Point(x1, y2),
-                    new Point(x2, y2)
-                }
+
+                new Point(x1, y1),
+                new Point(x1, y2),
+                new Point(x2, y2)
+                
             };
 
-            return polyline;
+            return list;
         }
 
     }

@@ -13,24 +13,32 @@ namespace SwitchSymbolPlugin.Models
 {
     internal class Switch: Symbol
     {
-    public override string ImgSrc => "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
-    public override UIElement UIElement { get; }
+        public override string ImgSrc => "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
+        public override UIElement UIElement { get; set; }
 
 
-    public Switch(Point position) : base(position)
-    {
-
-        UIElement = new Image
+        public Switch(Point position) : base(position)
         {
-            Source = new BitmapImage(new Uri(ImgSrc)),
-            Width = Size,
-            Height = Size,
-            Tag = this,
-            RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
+         SetupUIElement();
+        }
 
-        };
+        public Switch() : base()
+        {
+            SetupUIElement();
+        }
+
+
+        public override void SetupUIElement()
+        {
+            UIElement = new Image
+            {
+                Source = new BitmapImage(new Uri(ImgSrc)),
+                Width = Size,
+                Height = Size,
+                Tag = this,
+                RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
+
+            };
+        }
     }
-
-
-}
 }
