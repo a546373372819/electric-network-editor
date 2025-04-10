@@ -1,4 +1,5 @@
 ﻿using PluginContracts.Abstract;
+using PluginContracts.Serialization;
 using System.Collections.Generic;
 
 namespace PluginContracts.Interfaces

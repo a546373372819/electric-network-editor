@@ -1,4 +1,5 @@
-﻿using PluginContracts.Serialization;
+﻿using PluginContracts.Models;
+using PluginContracts.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,12 @@ namespace PluginContracts.Abstract
     {
         //ime(startend)
         [SerializationAttribute]
-        public long StartSymbolId { get; }
+        public long StartSymbolId { get; set; }
         [SerializationAttribute]
-        public long EndSymbolId { get; }
+        public long EndSymbolId { get; set; }
 
 
-        protected SymbolConnector(Symbol parent, Symbol child,Point position) : base(position)
+        protected SymbolConnector(Symbol parent, Symbol child,CanvasPoint position) : base(position)
         {
             StartSymbolId = parent.Id;
             EndSymbolId = child.Id;

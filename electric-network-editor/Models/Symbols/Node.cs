@@ -1,4 +1,5 @@
 ﻿using PluginContracts.Abstract;
+using PluginContracts.Models;
 using PluginContracts.Serialization;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace electric_network_editor.Models.Symbols
 {
     public class Node : Symbol
     {
-        public override string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/circle.png";
+        public override string ImgSrc { get; set; } = "pack://application:,,,/electric-network-editor;component/Images/circle.png";
         public override UIElement UIElement { get; set; }
 
-        public Node(Point position) : base(position)
+        public Node(CanvasPoint position) : base(position)
         {
             SetupUIElement();
 

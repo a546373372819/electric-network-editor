@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrthogonalConnectorPlugin\OrthogonalConnectorPlugin.csproj" />
     <ProjectReference Include="..\PluginContracts\PluginContracts.csproj" />
+    <ProjectReference Include="..\SwitchSymbolPlugin\SwitchSymbolPlugin.csproj" />
   </ItemGroup>
 
   <ItemGroup>

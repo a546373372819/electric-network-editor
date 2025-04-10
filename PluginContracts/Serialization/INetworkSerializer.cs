@@ -11,7 +11,7 @@ namespace PluginContracts.Serialization
     public interface INetworkSerializer
     {
         void Serialize(INetworkModel nm,string filePath);
-        IEnumerable<NetworkCanvasElement> Deserialize(string FilePath);
+        INetworkModel Deserialize(string FilePath);
 
 
     }

@@ -39,6 +39,7 @@ namespace electric_network_editor
 
             INetworkModelService nms = container.Resolve<INetworkModelService>();
             nms.CreateNetworkModel("");
+
         }
 
         private void RegisterInstances()
@@ -63,6 +64,7 @@ namespace electric_network_editor
         {
             container.RegisterSingleton<IEventAggregator, EventAggregator>();
             container.RegisterSingleton<INetworkSerializer, XMLNetworkSerializer>();
+            
 
         }
 

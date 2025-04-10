@@ -10,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace electric_network_editor.Models
 {
+    [SerializationClass]
     public class NetworkModel : INetworkModel
     {
+        public NetworkModel()
+        {
+        }
+
         public NetworkModel(string name, List<NetworkCanvasElement> networkModelElements)
         {
             Id = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -20,10 +25,11 @@ namespace electric_network_editor.Models
         }
 
         [SerializationAttribute]
-        public long Id { get; }
+        public long Id { get; set; }
         [SerializationAttribute]
-        public string Name { get; }
-        public List<NetworkCanvasElement> NetworkModelElements { get; }
+        public string Name { get; set; }
+        [SerializationAttribute]
+        public List<NetworkCanvasElement> NetworkModelElements { get; set; }
 
     }
 }

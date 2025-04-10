@@ -9,12 +9,13 @@ using System.Windows.Shapes;
 using System.Windows;
 using PluginContracts;
 using OrthogonalConnectorPlugin.Models;
+using PluginContracts.Models;
 
 namespace OrthogonalConnectorPlugin.Helpers
 {
     internal static class LineHelper
     {
-        public static List<Point> GetLinePoints( SymbolClickInfo parent, SymbolClickInfo child)
+        public static List<CanvasPoint> GetLinePoints( SymbolClickInfo parent, SymbolClickInfo child)
         {
 
             double x1 = parent.GetSymbolCenter().X;
@@ -36,7 +37,7 @@ namespace OrthogonalConnectorPlugin.Helpers
 
         }
 
-        private static List<Point> GetSingleLinePoints(SymbolClickInfo parent, SymbolClickInfo child)
+        private static List<CanvasPoint> GetSingleLinePoints(SymbolClickInfo parent, SymbolClickInfo child)
         {
 
             double x1 = parent.GetSymbolCenter().X;
@@ -79,18 +80,18 @@ namespace OrthogonalConnectorPlugin.Helpers
 
 
 
-            List<Point> list = new()
+            List<CanvasPoint> list = new()
             {
 
-                new Point(x1, y1),
-                new Point(x2, y2)
+                new CanvasPoint(x1, y1),
+                new CanvasPoint(x2, y2)
 
             };
 
             return list;
         }
 
-        public static List<Point> GetPolylinePoints(SymbolClickInfo parent, SymbolClickInfo child)
+        public static List<CanvasPoint> GetPolylinePoints(SymbolClickInfo parent, SymbolClickInfo child)
         {
             double x1 = parent.GetSymbolCenter().X;
             double y1 = parent.GetSymbolCenter().Y;
@@ -120,12 +121,12 @@ namespace OrthogonalConnectorPlugin.Helpers
             y2 = child.ClickPoint.Y;
             x1=parent.ClickPoint.X;
 
-            List<Point> list = new()
+            List<CanvasPoint> list = new()
             {
 
-                new Point(x1, y1),
-                new Point(x1, y2),
-                new Point(x2, y2)
+                new CanvasPoint(x1, y1),
+                new CanvasPoint(x1, y2),
+                new CanvasPoint(x2, y2)
                 
             };
 

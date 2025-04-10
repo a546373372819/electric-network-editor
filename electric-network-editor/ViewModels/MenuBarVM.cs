@@ -41,6 +41,7 @@ namespace electric_network_editor.ViewModels
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
+                networkModelService.LoadNetworkModel(filePath);
             }
         }
 

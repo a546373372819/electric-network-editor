@@ -3,6 +3,7 @@ using OrthogonalConnectorPlugin.Helpers;
 using OrthogonalConnectorPlugin.Models;
 using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
+using PluginContracts.Models;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace OrthogonalConnectorPlugin.Strategies
 
                     SymbolClickInfo childSymbolClickInfo = GetClickSymbolInfo(mousePos, sender, image);
 
-                    List<Point> LinePoints = LineHelper.GetLinePoints(_parentSymbolClickInfo, childSymbolClickInfo);
+                    List<CanvasPoint> LinePoints = LineHelper.GetLinePoints(_parentSymbolClickInfo, childSymbolClickInfo);
 
                     SymbolConnector sc = new OrthogonalLineConnector(LinePoints, _parentSymbolClickInfo.ClickedSymbol, childSymbolClickInfo.ClickedSymbol);
 

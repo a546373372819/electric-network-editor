@@ -8,23 +8,23 @@ using System.Windows;
 using PluginContracts.Abstract;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PluginContracts.Models;
 
 namespace SwitchSymbolPlugin.Models
 {
     internal class Switch: Symbol
     {
-        public override string ImgSrc => "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
+        public override string ImgSrc { get; set; } = "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
         public override UIElement UIElement { get; set; }
 
 
-        public Switch(Point position) : base(position)
+        public Switch(CanvasPoint position) : base(position)
         {
-         SetupUIElement();
+            SetupUIElement();
         }
 
         public Switch() : base()
         {
-            SetupUIElement();
         }
 
 

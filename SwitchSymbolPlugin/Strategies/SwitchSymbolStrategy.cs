@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using SwitchSymbolPlugin.Models;
+using PluginContracts.Models;
 
 namespace SwitchSymbolPlugin.Strategies
 {
@@ -33,7 +34,7 @@ namespace SwitchSymbolPlugin.Strategies
             if (hitTestResult?.VisualHit is not Image)
             {
 
-                Switch node = new(mousePos);
+                Switch node = new(new CanvasPoint(mousePos));
 
                 networkModelService.AddSymbol(node);
             }

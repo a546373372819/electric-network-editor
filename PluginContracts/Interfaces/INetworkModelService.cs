@@ -16,6 +16,8 @@ namespace PluginContracts.Interfaces
         void RemoveConnector(SymbolConnector SymbolConnector);
         void RemoveConnector(long id);
         void SaveActiveNetworkModel(string filePath);
+        void LoadNetworkModel(string filePath);
+
 
     }
 }

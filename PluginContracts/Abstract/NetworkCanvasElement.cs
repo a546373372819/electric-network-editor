@@ -1,4 +1,5 @@
-﻿using PluginContracts.Serialization;
+﻿using PluginContracts.Models;
+using PluginContracts.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +9,22 @@ using System.Windows;
 
 namespace PluginContracts.Abstract
 {
+    [SerializationClass]
     public abstract class NetworkCanvasElement
     {
         [SerializationAttribute]
-        public long Id {get;}
+        public long Id {get;set;}
         public abstract UIElement UIElement { get; set; }
         [SerializationAttribute]
-        public double X { get; }
-        [SerializationAttribute]
-        public double Y { get; }
+        public CanvasPoint Position { get; set; }
 
 
         public abstract void SetupUIElement();
 
-        protected NetworkCanvasElement(Point position)
+        protected NetworkCanvasElement(CanvasPoint position)
         {
             Id = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            X = position.X;
-            Y = position.Y;
+            Position = position;
 
         }
 

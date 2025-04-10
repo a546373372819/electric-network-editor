@@ -1,4 +1,5 @@
 ﻿using PluginContracts.Abstract;
+using PluginContracts.Models;
 using PluginContracts.Serialization;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,12 @@ namespace electric_network_editor.Models.Symbols
     public class Source : Symbol
     {
 
-        public override string ImgSrc => "pack://application:,,,/electric-network-editor;component/Images/triangle.png";
+        public override string ImgSrc { get; set; } = "pack://application:,,,/electric-network-editor;component/Images/triangle.png";
 
 
         public override UIElement UIElement { get; set; }
 
-        public Source(Point position) : base(position)
+        public Source(CanvasPoint position) : base(position)
         {
             SetupUIElement();
             

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media;
 using PluginContracts.Interfaces;
 using PluginContracts.Abstract;
+using PluginContracts.Models;
 
 namespace electric_network_editor.Strategies
 {
@@ -33,7 +34,7 @@ namespace electric_network_editor.Strategies
             if (hitTestResult?.VisualHit is not Image )
             {
                 
-                Source source = new Source(mousePos);
+                Source source = new Source(new CanvasPoint(mousePos));
 
                 networkModelService.AddSymbol(source);
             }

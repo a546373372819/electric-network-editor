@@ -24,7 +24,7 @@ namespace electric_network_editor.Services
     {
         public ObservableCollection<NetworkCanvasElement> ActiveNetworkCanvasElements { get; set; } = new ObservableCollection<NetworkCanvasElement>();
 
-        private Dictionary<long,NetworkModel> _networkModelIdDictionary= new Dictionary<long, NetworkModel>();
+        private Dictionary<long,INetworkModel> _networkModelIdDictionary= new Dictionary<long, INetworkModel>();
         private long _activeNetworkModelId { get; set; }
 
         private ISymbolService _symbolService;
@@ -53,7 +53,7 @@ namespace electric_network_editor.Services
             SetActiveNetworkModel(nm.Id);
         }
 
-        public NetworkModel GetActiveNetworkModel()
+        public INetworkModel GetActiveNetworkModel()
         {
             return _networkModelIdDictionary[_activeNetworkModelId];
         }
@@ -106,6 +106,19 @@ namespace electric_network_editor.Services
             GetActiveNetworkModel().NetworkModelElements.Clear();
             GetActiveNetworkModel().NetworkModelElements.AddRange(ActiveNetworkCanvasElements);
             _networkSerializer.Serialize(GetActiveNetworkModel(), f);
+        }
+
+        public void LoadNetworkModel(string filePath)
+        {
+            INetworkModel nm= _networkSerializer.Deserialize(filePath);
+            _networkModelIdDictionary[nm.Id] = nm;
+
+            foreach (NetworkCanvasElement item in nm.NetworkModelElements)
+            {
+                item.SetupUIElement();
+            }
+
+            SetActiveNetworkModel(nm.Id);
         }
     }
 }

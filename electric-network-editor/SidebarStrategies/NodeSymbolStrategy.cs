@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
+using PluginContracts.Models;
 
 namespace electric_network_editor.Strategies
 {
@@ -37,7 +38,7 @@ namespace electric_network_editor.Strategies
             if (hitTestResult?.VisualHit is not Image)
             {
 
-                Node node = new Node(mousePos);
+                Node node = new Node(new CanvasPoint(mousePos));
 
                 networkModelService.AddSymbol(node);
             }
