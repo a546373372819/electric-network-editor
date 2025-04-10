@@ -115,6 +115,14 @@ namespace electric_network_editor.Services
 
             foreach (NetworkCanvasElement item in nm.NetworkModelElements)
             {
+                if(item is Symbol)
+                {
+                    _symbolService.AddSymbol((Symbol)item);
+                }
+                else
+                {
+                    _symbolConnectorService.AddSymbolConnector((SymbolConnector)item);
+                }
                 item.SetupUIElement();
             }
 

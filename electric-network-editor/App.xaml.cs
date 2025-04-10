@@ -3,6 +3,7 @@ using electric_network_editor.Models;
 using electric_network_editor.Serializers;
 using electric_network_editor.Services;
 using electric_network_editor.Services.Interfaces;
+using electric_network_editor.Utils;
 using electric_network_editor.ViewModels;
 using electric_network_editor.ViewModels.Interfaces;
 using electric_network_editor.Views;
@@ -21,6 +22,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Unity;
+using Unity.Injection;
 
 namespace electric_network_editor
 {
@@ -48,6 +50,11 @@ namespace electric_network_editor
             RegisterServices();
             RegisterViewModels();
             RegisterViews();
+
+            
+
+
+
         }
 
         private void RegisterServices()
@@ -56,6 +63,7 @@ namespace electric_network_editor
             container.RegisterSingleton<INetworkModelService,NetworkModelService>();
             container.RegisterSingleton<ISymbolService, SymbolService>();
             container.RegisterSingleton<ISymbolConnectorService, SymbolConnectorService>();
+            container.RegisterType<PluginService>();
 
 
         }
@@ -64,7 +72,9 @@ namespace electric_network_editor
         {
             container.RegisterSingleton<IEventAggregator, EventAggregator>();
             container.RegisterSingleton<INetworkSerializer, XMLNetworkSerializer>();
-            
+            container.RegisterSingleton<UnityExportDescriptorProvider>(
+                new InjectionConstructor(container)
+            );
 
         }
 

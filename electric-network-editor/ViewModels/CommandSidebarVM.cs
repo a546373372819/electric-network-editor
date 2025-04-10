@@ -31,12 +31,12 @@ namespace electric_network_editor.ViewModels
         public DelegateCommand<INetworkCanvasStrategy> ButtonCommand { get; }
         public ObservableCollection<RadioButton> CommandButtons { get; set; } = new ObservableCollection<RadioButton>();
         INetworkModelService networkModelService;
-        public CommandSidebarVM(IEventAggregator ea, INetworkModelService nms)
+        public CommandSidebarVM(IEventAggregator ea, INetworkModelService nms, PluginService ps)
         {
             _ea = ea;
             networkModelService = nms;
             ButtonCommand = new DelegateCommand<INetworkCanvasStrategy>(On_StrategyChanged);
-            LoadPlugins();
+            _sidebarCommands=ps.LoadSidebarCommands().ToList();
             LoadCoreCommands();
             CreateButtons();
 
@@ -85,42 +85,6 @@ namespace electric_network_editor.ViewModels
             _sidebarCommands.Add(new DeleteSymbolCommand(networkModelService));
 
 
-        }
-
-        private void LoadPlugins()
-        {
-            try
-            {
-
-                string pluginsPath = "../../../Plugins";
-
-
-                var pluginAssemblies = Directory.GetFiles(pluginsPath, "*.dll")
-                                                .Select(Assembly.LoadFrom)
-                                                .ToList();
-
-                var configuration = new ContainerConfiguration()
-                .WithAssemblies(pluginAssemblies)  // Load plugin assemblies
-                .WithExport<INetworkModelService>(networkModelService);  // Register services to inject
-
-                using (var container = configuration.CreateContainer())
-                {
-                    _sidebarCommands = container.GetExports<ISidebarCommand>().ToList();
-
-                    if (_sidebarCommands?.Any() == true)
-                    {
-                        MessageBox.Show($"{_sidebarCommands.Count()} plugins loaded successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("No plugins found in the Plugins folder.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load plugins: {ex.Message}");
-            }
         }
     }
 }
