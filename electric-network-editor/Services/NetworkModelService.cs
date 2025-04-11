@@ -61,7 +61,11 @@ namespace electric_network_editor.Services
                     foreach (var item in e.OldItems)
                     {
                         if (item is Symbol) _symbolService.RemoveSymbol((Symbol)item);
-                        else _symbolConnectorService.RemoveSymbolConnector((SymbolConnector)item);
+                        else
+                        {
+                            _symbolConnectorService.RemoveSymbolConnector((SymbolConnector)item);
+                            _symbolService.RemoveConnectorFromSymbols((SymbolConnector)item);
+                        }
                     }
                     break;
 
@@ -119,9 +123,11 @@ namespace electric_network_editor.Services
 
         public void RemoveConnector(SymbolConnector SymbolConnector)
         {
-            _symbolService.RemoveConnectorFromSymbols(SymbolConnector);
 
             ActiveNetworkCanvasElements.Remove(SymbolConnector);
+
+            _symbolService.RemoveConnectorFromSymbols(SymbolConnector);
+
         }
 
         public void RemoveConnector(long id)

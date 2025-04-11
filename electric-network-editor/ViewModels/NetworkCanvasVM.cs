@@ -28,6 +28,7 @@ namespace electric_network_editor.ViewModels
 
         public NetworkCanvasVM(IEventAggregator ea,INetworkModelService nms)
         {
+
             _ea = ea;
             _ea.GetEvent<StrategyChangedEvent>().Subscribe(On_StrategyChanged);
             networkCanvasElements = nms.ActiveNetworkCanvasElements;

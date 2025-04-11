@@ -136,24 +136,6 @@ namespace electric_network_editor.Serializers
                 WriteObjectProperties(writer,nm);
                 writer.WriteEndElement();
 
-/*                PropertyInfo elementsProperty = nm.GetType().GetProperty("NetworkModelElements");
-
-                if (elementsProperty != null)
-                {
-                    writer.WriteStartElement(elementsProperty.Name);
-                    var list = elementsProperty.GetValue(nm) as IList<NetworkCanvasElement>;
-
-                    foreach(NetworkCanvasElement nce in list)
-                    {
-                        WriteObjectProperties(writer, nce);
-                        writer.WriteEndElement();
-
-                    }
-
-                    writer.WriteEndElement();
-                }
-
-                writer.WriteEndElement(); */
 
             }
         }
