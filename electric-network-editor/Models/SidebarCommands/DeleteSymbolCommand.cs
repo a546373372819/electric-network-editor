@@ -1,5 +1,4 @@
-﻿using electric_network_editor.Services.Interfaces;
-using electric_network_editor.Strategies;
+﻿using electric_network_editor.Strategies;
 using PluginContracts.Interfaces;
 using System;
 using System.Collections.Generic;

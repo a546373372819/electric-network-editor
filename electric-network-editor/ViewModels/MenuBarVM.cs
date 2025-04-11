@@ -1,5 +1,4 @@
 ﻿using electric_network_editor.Services;
-using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels.Interfaces;
 using Microsoft.Win32;
 using PluginContracts.Interfaces;

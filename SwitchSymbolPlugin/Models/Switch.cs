@@ -12,7 +12,7 @@ using PluginContracts.Models;
 
 namespace SwitchSymbolPlugin.Models
 {
-    internal class Switch: Symbol
+    public class Switch: Symbol
     {
         public override string ImgSrc { get; set; } = "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
         public override UIElement UIElement { get; set; }

@@ -1,9 +1,12 @@
 ﻿using PluginContracts.Abstract;
+using System.Collections.Generic;
 
-namespace electric_network_editor.Services.Interfaces
+namespace PluginContracts.Interfaces
 {
     public interface ISymbolConnectorService
     {
+        void ClearAllConnectors();
+        IEnumerable<SymbolConnector> GetAllConnectors();
         SymbolConnector GetSymbolConnector(long id);
         void AddSymbolConnector(SymbolConnector connector);
         void RemoveSymbolConnector(SymbolConnector connector);

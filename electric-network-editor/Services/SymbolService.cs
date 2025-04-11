@@ -1,5 +1,5 @@
-﻿using electric_network_editor.Services.Interfaces;
-using PluginContracts.Abstract;
+﻿using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +56,16 @@ namespace electric_network_editor.Services
             end.ConnectorsIds.Remove(Connector.Id);
 
 
+        }
+
+        public IEnumerable<Symbol> GetAllSymbols()
+        {
+            return SymbolsIdDictionary.Values;
+        }
+
+        public void ClearAllSymbols()
+        {
+            SymbolsIdDictionary.Clear();
         }
     }
 }

@@ -15,7 +15,6 @@ using PluginContracts.Interfaces;
 using System.Collections.Specialized;
 using electric_network_editor.Services;
 using electric_network_editor.ViewModels.Interfaces;
-using electric_network_editor.Services.Interfaces;
 
 namespace electric_network_editor.ViewModels
 {

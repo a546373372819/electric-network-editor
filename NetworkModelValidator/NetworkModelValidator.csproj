@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Composition" Version="9.0.4" />
+    <PackageReference Include="System.Composition" Version="9.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\electric-network-editor\electric-network-editor.csproj" />
     <ProjectReference Include="..\PluginContracts\PluginContracts.csproj" />
+    <ProjectReference Include="..\SwitchSymbolPlugin\SwitchSymbolPlugin.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y &quot;bin\Debug\net7.0-windows\NetworkModelValidator.dll&quot; &quot;..\electric-network-editor\Plugins\&quot;" />
+  </Target>
 
 </Project>

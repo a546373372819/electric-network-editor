@@ -1,6 +1,5 @@
 ﻿using electric_network_editor.Events;
 using electric_network_editor.Models;
-using electric_network_editor.Services.Interfaces;
 using PluginContracts.Abstract;
 using PluginContracts.Interfaces;
 using Prism.Events;
@@ -17,6 +16,7 @@ using System.Xml;
 using System.Reflection.Metadata;
 using PluginContracts.Serialization;
 using System.Collections;
+using System.Collections.Specialized;
 
 namespace electric_network_editor.Services
 {
@@ -37,6 +37,40 @@ namespace electric_network_editor.Services
             _symbolConnectorService = scs;
             _symbolService = ss;
             _networkSerializer = serializer;
+            ActiveNetworkCanvasElements.CollectionChanged += OnElementsChanged;
+        }
+
+        void OnElementsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            var collection = sender as ObservableCollection<NetworkCanvasElement>;
+            if (collection == null) return;
+
+            List<NetworkCanvasElement> errors = new List<NetworkCanvasElement>();
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (NetworkCanvasElement item in e.NewItems)
+                    {
+                        if(item is Symbol)_symbolService.AddSymbol((Symbol)item);
+                        else _symbolConnectorService.AddSymbolConnector((SymbolConnector)item);
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                    {
+                        if (item is Symbol) _symbolService.RemoveSymbol((Symbol)item);
+                        else _symbolConnectorService.RemoveSymbolConnector((SymbolConnector)item);
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _symbolConnectorService.ClearAllConnectors();
+                    _symbolService.ClearAllSymbols();
+                    break;
+            }
+
         }
 
         void SetActiveNetworkModel(long Id)
@@ -61,25 +95,21 @@ namespace electric_network_editor.Services
         public void AddSymbol(Symbol kymbol)
         {
             ActiveNetworkCanvasElements.Add(kymbol);
-            _symbolService.AddSymbol(kymbol);
-           
+
         }
 
 
-    
+
 
         public void AddConnector(SymbolConnector SymbolConnector)
         {
             ActiveNetworkCanvasElements.Add(SymbolConnector);
-            _symbolConnectorService.AddSymbolConnector(SymbolConnector);
-
 
         }
 
         public void RemoveSymbol(Symbol Symbol)
         {
             ActiveNetworkCanvasElements.Remove(Symbol);
-            _symbolService.RemoveSymbol(Symbol);
         }
         public void RemoveSymbol(long id)
         {
@@ -92,7 +122,6 @@ namespace electric_network_editor.Services
             _symbolService.RemoveConnectorFromSymbols(SymbolConnector);
 
             ActiveNetworkCanvasElements.Remove(SymbolConnector);
-            _symbolConnectorService.RemoveSymbolConnector(SymbolConnector);
         }
 
         public void RemoveConnector(long id)
@@ -110,21 +139,12 @@ namespace electric_network_editor.Services
 
         public void LoadNetworkModel(string filePath)
         {
+
+
             INetworkModel nm= _networkSerializer.Deserialize(filePath);
             _networkModelIdDictionary[nm.Id] = nm;
-
-            foreach (NetworkCanvasElement item in nm.NetworkModelElements)
-            {
-                if(item is Symbol)
-                {
-                    _symbolService.AddSymbol((Symbol)item);
-                }
-                else
-                {
-                    _symbolConnectorService.AddSymbolConnector((SymbolConnector)item);
-                }
-                item.SetupUIElement();
-            }
+            foreach (NetworkCanvasElement item in nm.NetworkModelElements) item.SetupUIElement();
+            
 
             SetActiveNetworkModel(nm.Id);
         }

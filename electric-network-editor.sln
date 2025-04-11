@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrthogonalConnectorPlugin",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginContracts", "PluginContracts\PluginContracts.csproj", "{77508093-F2E1-41E8-B17F-42F445E0CA91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchSymbolPlugin", "SwitchSymbolPlugin\SwitchSymbolPlugin.csproj", "{5D58F034-AAA1-456D-9266-C745A908C616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwitchSymbolPlugin", "SwitchSymbolPlugin\SwitchSymbolPlugin.csproj", "{5D58F034-AAA1-456D-9266-C745A908C616}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkModelValidator", "NetworkModelValidator\NetworkModelValidator.csproj", "{A439C1C9-DDA5-4B9E-9CAB-85CB2F485EAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5D58F034-AAA1-456D-9266-C745A908C616}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D58F034-AAA1-456D-9266-C745A908C616}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D58F034-AAA1-456D-9266-C745A908C616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A439C1C9-DDA5-4B9E-9CAB-85CB2F485EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A439C1C9-DDA5-4B9E-9CAB-85CB2F485EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A439C1C9-DDA5-4B9E-9CAB-85CB2F485EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A439C1C9-DDA5-4B9E-9CAB-85CB2F485EAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

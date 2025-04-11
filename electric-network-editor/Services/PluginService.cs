@@ -18,11 +18,13 @@ namespace electric_network_editor.Services
         public PluginService(UnityExportDescriptorProvider unityExportDescriptorProvider)
         {
             UnityExportDescriptorProvider = unityExportDescriptorProvider;
+            LoadPlugins();
         }
 
         public UnityExportDescriptorProvider UnityExportDescriptorProvider { get; set; }
-
-        public IEnumerable<ISidebarCommand> LoadSidebarCommands()
+        public INetworkModelValidator _validator;
+        public IEnumerable<ISidebarCommand> SidebarCommands { get; set; }
+        public void LoadPlugins()
         {
             try
             {
@@ -34,29 +36,28 @@ namespace electric_network_editor.Services
 
                 var configuration = new ContainerConfiguration()
                 .WithAssemblies(pluginAssemblies)
-                .WithProvider(UnityExportDescriptorProvider); 
+                .WithProvider(UnityExportDescriptorProvider);
 
                 using (var container = configuration.CreateContainer())
                 {
                     // Manually resolve plugins
-                    var _sidebarCommands = container.GetExports<ISidebarCommand>().ToList();
+                    SidebarCommands = container.GetExports<ISidebarCommand>().ToList();
+                    _validator = container.GetExport<INetworkModelValidator>();
 
-                   
 
-                    if (_sidebarCommands?.Any() == true)
-                        MessageBox.Show($"{_sidebarCommands.Count()} plugins loaded successfully.");
-                        
+                    if (SidebarCommands?.Any() == true)
+                        MessageBox.Show($"{SidebarCommands.Count()} plugins loaded successfully.");
+
                     else
                         MessageBox.Show("No plugins found in the Plugins folder.");
-                    return _sidebarCommands;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load plugins: {ex.Message}");
             }
-            return null;
         }
+      
 
     }
 }

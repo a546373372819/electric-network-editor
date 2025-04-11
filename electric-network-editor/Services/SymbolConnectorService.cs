@@ -1,5 +1,5 @@
-﻿using electric_network_editor.Services.Interfaces;
-using PluginContracts.Abstract;
+﻿using PluginContracts.Abstract;
+using PluginContracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,16 @@ namespace electric_network_editor.Services
         public void AddSymbolConnector(SymbolConnector connector)
         {
             SymbolConnectorIdDictionary.Add(connector.Id,connector);
+        }
+
+        public void ClearAllConnectors()
+        {
+            SymbolConnectorIdDictionary.Clear();
+        }
+
+        public IEnumerable<SymbolConnector> GetAllConnectors()
+        {
+            return SymbolConnectorIdDictionary.Values;
         }
 
         public SymbolConnector GetSymbolConnector(long id)

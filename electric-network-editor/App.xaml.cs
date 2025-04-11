@@ -2,7 +2,6 @@
 using electric_network_editor.Models;
 using electric_network_editor.Serializers;
 using electric_network_editor.Services;
-using electric_network_editor.Services.Interfaces;
 using electric_network_editor.Utils;
 using electric_network_editor.ViewModels;
 using electric_network_editor.ViewModels.Interfaces;
@@ -41,6 +40,7 @@ namespace electric_network_editor
 
             INetworkModelService nms = container.Resolve<INetworkModelService>();
             nms.CreateNetworkModel("");
+
 
         }
 

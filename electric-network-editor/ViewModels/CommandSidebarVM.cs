@@ -2,7 +2,6 @@
 using electric_network_editor.Models;
 using electric_network_editor.Models.SidebarCommands;
 using electric_network_editor.Services;
-using electric_network_editor.Services.Interfaces;
 using electric_network_editor.ViewModels.Interfaces;
 using PluginContracts.Interfaces;
 using Prism.Commands;
@@ -36,7 +35,7 @@ namespace electric_network_editor.ViewModels
             _ea = ea;
             networkModelService = nms;
             ButtonCommand = new DelegateCommand<INetworkCanvasStrategy>(On_StrategyChanged);
-            _sidebarCommands=ps.LoadSidebarCommands().ToList();
+            _sidebarCommands = ps.SidebarCommands.ToList();
             LoadCoreCommands();
             CreateButtons();
 
