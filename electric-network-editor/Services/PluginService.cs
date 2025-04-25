@@ -22,6 +22,7 @@ namespace electric_network_editor.Services
         }
 
         public UnityExportDescriptorProvider UnityExportDescriptorProvider { get; set; }
+
         public INetworkModelValidator _validator;
         public IEnumerable<ISidebarCommand> SidebarCommands { get; set; }
         public void LoadPlugins()

@@ -32,6 +32,18 @@ namespace electric_network_editor.Services
             return SymbolConnectorIdDictionary[id];
         }
 
+        public List<SymbolConnector> GetSymbolConnectors(List<long> Ids)
+        {
+            List<SymbolConnector> connectors = new List<SymbolConnector>();
+
+            foreach (long id in Ids)
+            {
+                connectors.Add(GetSymbolConnector(id));
+            }
+
+            return connectors;
+        }
+
         public void RemoveSymbolConnector(SymbolConnector connector)
         {
             SymbolConnectorIdDictionary.Remove(connector.Id);

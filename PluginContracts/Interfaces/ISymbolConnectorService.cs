@@ -10,5 +10,6 @@ namespace PluginContracts.Interfaces
         SymbolConnector GetSymbolConnector(long id);
         void AddSymbolConnector(SymbolConnector connector);
         void RemoveSymbolConnector(SymbolConnector connector);
+        List<SymbolConnector> GetSymbolConnectors(List<long> Ids);
     }
 }

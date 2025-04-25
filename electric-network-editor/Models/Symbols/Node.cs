@@ -13,10 +13,15 @@ using System.Windows.Media.Imaging;
 
 namespace electric_network_editor.Models.Symbols
 {
+    public enum NodeState
+    {
+        ON,OFF,LOOP,DISONNECTED
+    }
     public class Node : Symbol
     {
         public override string ImgSrc { get; set; } = "pack://application:,,,/electric-network-editor;component/Images/circle.png";
         public override UIElement UIElement { get; set; }
+        public NodeState State { get; set; } = NodeState.DISONNECTED;
 
         public Node(CanvasPoint position) : base(position)
         {
@@ -39,6 +44,11 @@ namespace electric_network_editor.Models.Symbols
                 Tag = this,
                 RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
             };
+        }
+
+        public override void SwitchState()
+        {
+            return;
         }
     }
 }

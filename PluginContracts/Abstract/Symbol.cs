@@ -21,6 +21,7 @@ namespace PluginContracts.Abstract
 
         [SerializationAttribute]
         public abstract string ImgSrc { get; set; }
+        public abstract void SwitchState();
 
         public static double Size = 100;
 

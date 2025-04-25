@@ -9,14 +9,19 @@ using PluginContracts.Abstract;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PluginContracts.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SwitchSymbolPlugin.Models
 {
+    public enum SwitchState
+    {
+        OPEN,CLOSE
+    }
     public class Switch: Symbol
     {
         public override string ImgSrc { get; set; } = "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
         public override UIElement UIElement { get; set; }
-
+        public SwitchState State { get; set; }=Models.SwitchState.OPEN;
 
         public Switch(CanvasPoint position) : base(position)
         {
@@ -30,7 +35,7 @@ namespace SwitchSymbolPlugin.Models
 
         public override void SetupUIElement()
         {
-            UIElement = new Image
+            UIElement = new System.Windows.Controls.Image
             {
                 Source = new BitmapImage(new Uri(ImgSrc)),
                 Width = Size,
@@ -39,6 +44,13 @@ namespace SwitchSymbolPlugin.Models
                 RenderTransform = new TranslateTransform(-Size / 2, -Size / 2)
 
             };
+
+        }
+
+        public override void SwitchState()
+        {
+            if (State == Models.SwitchState.OPEN) State = Models.SwitchState.CLOSE;
+            else State = Models.SwitchState.OPEN;
         }
     }
 }

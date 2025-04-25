@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\touch.png" />
+    <None Remove="Shader\shader.ps" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\electric-network-editor\electric-network-editor.csproj" />
+    <ProjectReference Include="..\PluginContracts\PluginContracts.csproj" />
+    <ProjectReference Include="..\SwitchSymbolPlugin\SwitchSymbolPlugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\touch.png" />
+    <Resource Include="Shader\shader.ps" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y &quot;bin\Debug\net7.0-windows\NetworkColorPlugin.dll&quot; &quot;..\electric-network-editor\Plugins\&quot;" />
+  </Target>
+
+</Project>

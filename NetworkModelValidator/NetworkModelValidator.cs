@@ -19,17 +19,14 @@ namespace NetworkModelValidator
     public class NetworkModelValidator:INetworkModelValidator
     {
         [ImportingConstructor]
-        public NetworkModelValidator(INetworkModelService nms,ISymbolService symbolService, ISymbolConnectorService symbolConnectorService)
+        public NetworkModelValidator(INetworkModelService nms,ISymbolService symbolService)
         {
             nms.ActiveNetworkCanvasElements.CollectionChanged += OnNetworkModelChanged;
 
             _symbolService = symbolService;
-            _symbolConnectorService = symbolConnectorService;
         }
 
-        INetworkModelService _networkModelService { get; set; }
         ISymbolService _symbolService { get;set; }
-        ISymbolConnectorService _symbolConnectorService { get; set; }
 
       
 
