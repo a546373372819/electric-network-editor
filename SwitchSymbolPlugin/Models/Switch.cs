@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PluginContracts.Models;
 using static System.Net.Mime.MediaTypeNames;
+using PluginContracts.Serialization;
 
 namespace SwitchSymbolPlugin.Models
 {
@@ -21,6 +22,8 @@ namespace SwitchSymbolPlugin.Models
     {
         public override string ImgSrc { get; set; } = "pack://application:,,,/SwitchSymbolPlugin;component/Images/rectangle.png";
         public override UIElement UIElement { get; set; }
+
+        [SerializationAttribute]
         public SwitchState State { get; set; }=Models.SwitchState.OPEN;
 
         public Switch(CanvasPoint position) : base(position)

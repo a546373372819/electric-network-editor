@@ -21,6 +21,8 @@ namespace electric_network_editor.Models.Symbols
     {
         public override string ImgSrc { get; set; } = "pack://application:,,,/electric-network-editor;component/Images/circle.png";
         public override UIElement UIElement { get; set; }
+
+        [SerializationAttribute]
         public NodeState State { get; set; } = NodeState.DISONNECTED;
 
         public Node(CanvasPoint position) : base(position)

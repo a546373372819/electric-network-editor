@@ -25,6 +25,7 @@ namespace electric_network_editor.Models.Symbols
 
         public override UIElement UIElement { get; set; }
 
+        [SerializationAttribute]
         public SourceState State { get; set; } = SourceState.OFF;
 
         public Source(CanvasPoint position) : base(position)
